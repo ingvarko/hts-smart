@@ -11,6 +11,36 @@ Main.onLoad = function()
 	// Enable key event processing
 	this.enableKeys();
 	widgetAPI.sendReadyEvent();
+	
+	//Launcing the carousel
+	var carousel = $("#carousel > *").rondell({
+      preset: "carousel",
+      size: {
+    	  width: 1620,
+          height: 530  
+      },
+      scaling: 1,
+      itemProperties: {
+    	  size: {
+    		  width: 914,
+    		  height: 514
+       	  }
+      },
+      center: {
+    	  left: 810,
+    	  top: 265
+      },
+      radius: {
+    	  x: 400
+      },
+      autoRotation: {
+    	  enabled: false
+      }
+    });
+	
+	//$("img").reflect();
+	
+	//carousel.fitToContainer();
 };
 
 Main.onUnload = function()
@@ -20,7 +50,7 @@ Main.onUnload = function()
 
 Main.enableKeys = function()
 {
-	document.getElementById("anchor").focus();
+	//document.getElementById("anchor").focus();
 };
 
 Main.keyDown = function()
