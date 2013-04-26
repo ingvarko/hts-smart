@@ -13,10 +13,3 @@ body
 	height: 1080px;
 	background-image: url("../../images/background.png");
 }
-
-.loaderImg
-{
-	position: absolute;
-	top: 390px;
-	left: 760px;
-}

@@ -1,0 +1,6 @@
+{
+    "scenes" : ["HomePage", "Services"],
+    "files" : [],
+    "theme" : "base",
+    "modules" : ["ui.*"]
+}
