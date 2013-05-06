@@ -1,0 +1,97 @@
+*
+{
+	padding: 0;
+	margin: 0;
+	border: 0;
+}
+
+/* Layout */
+body
+{
+	color: #fff;
+	width: 1920px;
+	height: 1080px;
+	background-image: url("../../images/background.png");
+}
+.servicesBar
+{
+	width: 1920px;
+	height: 250px;
+}
+.bottomSpace
+{
+	height: 70px;
+}
+
+.left_empty_space {
+	width: 660px;
+}
+.tv_icon {
+	width: 200px;
+	padding-top: 15px;
+}
+.media_icon {
+	width: 200px;
+	padding-top: 40px;
+}
+.musik_icon {
+	width: 160px;
+	padding-left: 15px;
+	padding-top: 30px;
+}
+.service_icon {
+	width: 210px;
+	padding-top: 20px;
+}
+.temperature_text {
+	width: 170px;
+	padding-top: 20px;
+	font-size: 95px;
+	color: #ffffdb;
+	font-family: LatoHai.ttf;
+	
+}
+.temperature_celsium {
+	width: 60px;
+	padding-top: 20px;
+	font-size: 95px;
+	color: #ffffdb;
+	font-family: LatoHai.ttf;	
+}
+.temperature_celsium2 {
+	width: 20px;
+	padding-top: 30px;
+	padding-left: 10px;
+	font-size: 30px;
+	color: #ffffdb;
+	font-family: LatoHai.ttf;
+}
+
+.weather_icon {
+	width: 240px;
+}
+.tv_icon_shadow {
+	padding-left: 5px;
+}
+.media_icon_shadow {
+	padding-left: 10px;
+}
+.musik_icon_shadow {
+	padding-left: 0;
+}
+.service_icon_shadow {
+	padding-left: 15px;
+}
+.other_services {
+	font-size: 30px;
+	color: #ffffdb;
+	font-family: LatoHai.ttf;
+	
+}
+.bottomSpaceMM
+{
+	height: 70px;
+}
+
+
+

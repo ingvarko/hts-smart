@@ -20,3 +20,259 @@ body
 	top: 390px;
 	left: 760px;
 }
+.header
+{
+	width: 1920px;
+	height: 200px;
+}
+.navigation
+{
+	width: 660px;
+}
+.shortLinks {
+	
+}
+.firstLine
+{
+	padding-left: 50px;
+}
+.anchor
+{
+	padding-left: 35px;
+}
+.secondLine
+{
+	padding-left: 35px;
+}
+.backBtn {
+	padding-top: 5px;
+	padding-left: 35px;
+}
+.tvBtn {
+	padding-left: 40px;
+}
+.musikBtn {
+	padding-top: 5px;
+	padding-left: 40px;
+}
+.backBtnShadow {
+	padding-left: 35px;
+}
+.tvBtnShadow {
+	padding-left: 40px;
+}
+.musikBtnShadow {
+	padding-left: 35px;
+}
+.playBtn
+{
+	padding-left: 40px;
+}
+.thirdLine
+{
+	padding-left: 40px;
+}
+.language
+{
+	padding-left: 40px;
+	font-size: 40px;
+	font-weight: bold;
+	color: #f6f2e9;
+	text-shadow: 3px 7px #222;
+}
+.langShadow {
+	padding-left: 65px;
+}
+.arrowDown
+{
+	padding-top: 12px;
+	padding-left: 10px;
+}
+.fourthLine
+{
+	padding-left: 30px;
+}
+.anchorShadow
+{
+	padding-left: 20px;	
+}
+.playShadow
+{
+	padding-left: 40px;
+}
+.logo
+{
+	width: 640px;
+	padding-top: 10px;
+}
+.timedate
+{
+	width: 620px;
+	padding-right: 30px;
+	padding-top: 5px;
+}
+
+td.time
+{
+	font-size: 70px;
+	color: #ffffdb;
+	font-family: LatoHai.ttf;
+}
+td.date
+{
+	font-size: 25px;
+	color: #efe7b7;
+	font-family: LatoHai.ttf;
+}
+.galeryBar
+{
+	width: 1920px;
+	height: 530px;
+}
+.galeryArea
+{
+	padding-top: 30px;
+	-webkit-box-reflect: below -16px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(20%, transparent), to(rgba(255, 255, 255, 0.1)));
+}
+.arrowLeft 
+{
+	width: 150px;
+	height: 320px;
+	padding-left: 70px;
+}
+.smallArrowLeft 
+{
+	width: 300px;
+	height: 320px;
+	padding-left: 145px;
+}
+.arrowRight
+{
+	width: 150px;
+	padding-right: 70px;
+}
+.shortArrowRight {
+	width: 300px;
+	padding-right: 145px;
+}
+.arrowLeftShadow
+{
+	padding-left: 45px;
+}
+.shortArrowLeftShadow {
+	padding-left: 120px;
+}
+.arrowRightShadow
+{
+	padding-right: 45px;
+}
+.shortArrowRightShadow {
+	padding-right: 120px;
+}
+.bottomBar
+{
+	width: 1920px;
+	height: 120px;
+}
+.categoryTitle {
+	width: 1920px;
+	height: 200px;
+}
+.categoryTypeTitle {
+	width: 1920px;
+	height: 100px;
+}
+.categoryTitleText {
+	text-align: center;
+	font-size: 80px;
+	font-weight: bold;
+	font-family: LatoBol.ttf;
+	color: #efe7b7;
+	text-shadow: 3px 7px #764f1f;
+}
+.categoryTypeTitleText {
+	text-align: center;
+	font-size: 80px;
+	font-weight: bold;
+	font-family: LatoBol.ttf;
+	color: #efe7b7;
+	text-shadow: 3px 7px #764f1f;
+}
+.bottomBackText {
+	width: 950px;
+	font-size: 30px;
+	font-weight: bold;
+	font-family: LatoBol.ttf;
+	color: #f6f2e9;
+	padding-bottom: 35px;
+	padding-right: 50px;
+}
+.bottomHomeText {
+	font-size: 30px;
+	font-weight: bold;
+	font-family: LatoBol.ttf;
+	color: #f6f2e9;
+	padding-bottom: 35px;
+	padding-left: 10px;
+}
+.carousel_mask {
+	position: absolute;
+	bottom: 142px;
+	left: 523px;
+	z-index: 10000;
+}
+.bottom_carousel_text {
+	position: absolute;
+	bottom: 180px;
+	left: 0;
+	width: 1920px;
+	text-align: center;
+	z-index: 10001;
+	font-size: 55px;
+	font-weight: bold;
+	font-family: LatoBol.ttf;
+	color: #f6f2e9;	
+}
+.small_carousel_mask {
+	position: absolute;
+	bottom: 285px;
+	left: 572px;
+	z-index: 10000;
+}
+.bottom_small_carousel_text {
+	position: absolute;
+	bottom: 300px;
+	left: 0;
+	width: 1920px;
+	text-align: center;
+	z-index: 10001;
+	font-size: 40px;
+	font-weight: bold;
+	font-family: LatoBol.ttf;
+	color: #ffffff;
+}
+.descriptionText {
+	width: 1920px;
+	height: 130px;
+}
+.descriptionTextInner {
+	width: 767px;
+	height: 130px;
+	overflow: hidden;
+	text-align: justify;
+	font-size: 30px;
+	font-family: LatoLig.ttf;
+	color: #ffffff;
+}
+
+
+
+
+
+
+
+
+
+
+
+

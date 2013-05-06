@@ -1,5 +1,5 @@
 {
-    "scenes" : ["HomePage", "Services"],
+    "scenes" : ["HomePage", "MainMenu", "MovieTypes", "Movies", "TVchannels"],
     "files" : [],
     "theme" : "base",
     "modules" : ["ui.*"]

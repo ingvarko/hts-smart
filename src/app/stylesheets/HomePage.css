@@ -14,85 +14,6 @@ body
 	background-image: url("../../images/background.png");
 }
 
-.header
-{
-	width: 1920px;
-	height: 200px;
-}
-.navigation
-{
-	width: 660px;
-}
-.firstLine
-{
-	padding-left: 50px;
-}
-.anchor
-{
-	padding-left: 35px;
-}
-.secondLine
-{
-	padding-left: 35px;
-}
-.playBtn
-{
-	padding-left: 40px;
-}
-.thirdLine
-{
-	padding-left: 40px;
-}
-.language
-{
-	padding-left: 40px;
-	font-size: 40px;
-	font-weight: bold;
-	color: #f6f2e9;
-	text-shadow: 3px 7px #222;
-}
-.arrowDown
-{
-	padding-top: 12px;
-	padding-left: 10px;
-}
-.fourthLine
-{
-	padding-left: 30px;
-}
-.anchorShadow
-{
-	padding-left: 20px;	
-}
-.playShadow
-{
-	padding-left: 40px;
-}
-.logo
-{
-	width: 640px;
-	padding-top: 10px;
-}
-.timedate
-{
-	width: 620px;
-	padding-right: 30px;
-	padding-top: 5px;
-}
-
-td.time
-{
-	font-size: 70px;
-	color: #ffffdb;
-	font-family: LatoHai.ttf;
-}
-td.date
-{
-	font-size: 25px;
-	color: #efe7b7;
-	font-family: LatoHai.ttf;
-}
-
 .welcomeBar
 {
 	width: 1920px;
@@ -126,14 +47,6 @@ td.date
 	padding-top: 30px;
 	-webkit-box-reflect: below -16px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(20%, transparent), to(rgba(255, 255, 255, 0.1)));
 }
-#carousel
-{
-	width: 1620px;
-	height: 530px;
-}
-.carouselImage
-{
-}
 .arrowLeft 
 {
 	width: 150px;
@@ -155,11 +68,6 @@ td.date
 	padding-right: 45px;
 }
 
-.bottomBar
-{
-	width: 1920px;
-	height: 200px;
-}
 .startText
 {
 	text-align: center;
@@ -167,16 +75,12 @@ td.date
 	font-weight: bold;
 	font-family: LatoBol.ttf;
 	color: #f6f2e9;
-	padding-bottom: 50px;
+	padding-bottom: 25px;
 }
 .servicesBar
 {
 	width: 1920px;
 	height: 250px;
-}
-.bottomSpace
-{
-	height: 100px;
 }
 
 

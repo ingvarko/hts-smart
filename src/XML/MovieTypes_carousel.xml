@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<carousel>
+	<images>
+		<image src="images/movieTypes/action.png"/>
+		<image src="images/movieTypes/2.png"/>
+		<image src="images/movieTypes/3.png"/>
+		<image src="images/movieTypes/4.png"/>
+		<image src="images/movieTypes/5.png"/>
+	</images>
+</carousel>

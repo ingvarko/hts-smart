@@ -1,18 +1,18 @@
-function SceneHomePage() {
+function SceneMovieTypes() {
 };
 
-SceneHomePage.prototype.initialize = function () {
-    alert("SceneHP.initialize()");
+SceneMovieTypes.prototype.initialize = function () {
+    alert("SceneMovieTypes.initialize()");
     
     //Parsing the xml and adding images to html page
-    SceneHomePage.ParseXML("XML/HomePage_carousel.xml");
+    SceneMovieTypes.ParseXML("XML/MovieTypes_carousel.xml");
 };
 
-SceneHomePage.carousel = null;
+SceneMovieTypes.carousel = null;
 
-SceneHomePage.launchCarousel = function() {
+SceneMovieTypes.launchCarousel = function() {
 	//Launcing the carousel
-	SceneHomePage.carousel = $("#carouselHP > *").rondell({
+	SceneMovieTypes.carousel = $("#carouselMT > *").rondell({
       preset: "carousel",
       size: {
     	  width: 1520,
@@ -41,7 +41,7 @@ SceneHomePage.launchCarousel = function() {
 	$(".loaderImg").hide();
 };
 
-SceneHomePage.ParseXML = function (xmlURL) {
+SceneMovieTypes.ParseXML = function (xmlURL) {
 
     $.ajax({
         type: "get",
@@ -52,12 +52,12 @@ SceneHomePage.ParseXML = function (xmlURL) {
                 $(xml).find("image").each(function(){ // loop
                 	var src = $(this).attr("src");
                 	
-                	$("#carouselHP").append('<a rel="rondell_1" href="#"><img src="'+src+'" width="914" height="514" class="carouselImage"/></a>');
+                	$("#carouselMT").append('<a rel="rondell_1" href="#"><img src="'+src+'" width="914" height="514" class="carouselImage"/></a>');
                     
                 });
             }
             
-            SceneHomePage.launchCarousel();
+            SceneMovieTypes.launchCarousel();
         },
         error: function(){
             alert("xml error!!");
@@ -66,37 +66,37 @@ SceneHomePage.ParseXML = function (xmlURL) {
 };
 
 
-SceneHomePage.prototype.handleShow = function (data) {
-    alert("SceneHP.handleShow()");
+SceneMovieTypes.prototype.handleShow = function (data) {
+    alert("SceneMovieTypes.handleShow()");
 };
 
-SceneHomePage.prototype.handleHide = function () {
-    alert("SceneHP.handleHide()");
+SceneMovieTypes.prototype.handleHide = function () {
+    alert("SceneMovieTypes.handleHide()");
 };
 
-SceneHomePage.prototype.handleFocus = function () {
-    alert("SceneHP.handleFocus()");
+SceneMovieTypes.prototype.handleFocus = function () {
+    alert("SceneMovieTypes.handleFocus()");
 };
 
-SceneHomePage.prototype.handleBlur = function () {
-    alert("SceneHP.handleBlur()");
+SceneMovieTypes.prototype.handleBlur = function () {
+    alert("SceneMovieTypes.handleBlur()");
 };
 
-SceneHomePage.prototype.handleKeyDown = function (keyCode) {
-    alert("SceneHP.handleKeyDown(" + keyCode + ")");
+SceneMovieTypes.prototype.handleKeyDown = function (keyCode) {
+    alert("SceneMovieTypes.handleKeyDown(" + keyCode + ")");
     switch (keyCode) {
         case sf.key.LEFT:
-        	SceneHomePage.carousel.shiftLeft();
+        	SceneMovieTypes.carousel.shiftLeft();
             break;
         case sf.key.RIGHT:
-        	SceneHomePage.carousel.shiftRight();
+        	SceneMovieTypes.carousel.shiftRight();
             break;
         case sf.key.UP:
             break;
         case sf.key.DOWN:
             break;
         case sf.key.ENTER:
-        	Controller.changeScene('MainMenu');
+        	//Controller.changeScene('MainMenu');
             break;
     }
 };

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<carousel>
+	<images>
+		<image src="images/movies/irronman3.png"/>
+		<image src="images/movies/2.png"/>
+		<image src="images/movies/3.png"/>
+		<image src="images/movies/4.png"/>
+		<image src="images/movies/5.png"/>
+	</images>
+</carousel>
