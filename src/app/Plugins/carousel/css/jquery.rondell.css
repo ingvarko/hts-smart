@@ -305,12 +305,15 @@
   -ms-border-radius: 5px;
   -o-border-radius: 5px;
   border-radius: 5px;
+  
   -webkit-box-shadow: 0 2px 50px 1px rgba(0, 0, 0, 0.7);
   -moz-box-shadow: 0 2px 50px 1px rgba(0, 0, 0, 0.7);
   box-shadow: 0 2px 50px 1px rgba(0, 0, 0, 0.7);
 }
 .rondell-lightbox-content .rondell-item-image {
-  border: 1px solid #333;
+  
+     border: 15px solid #ffffff;
+  
 }
 .rondell-lightbox-content .rondell-caption,
 .rondell-lightbox-content .rondell-caption.rondell-item-overlay {

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <carousel>
 	<images>
-		<image src="images/carousel/1.png"/>
-		<image src="images/carousel/2.png"/>
-		<image src="images/carousel/3.png"/>
-		<image src="images/carousel/4.png"/>
-		<image src="images/carousel/5.png"/>
+		<image src="images/carousel/1.jpg"/>
+		<image src="images/carousel/2.jpg"/>
+		<image src="images/carousel/3.jpg"/>
+		<image src="images/carousel/4.jpg"/>
+		<image src="images/carousel/5.jpg"/>
 	</images>
 </carousel>

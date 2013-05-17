@@ -1,47 +1,134 @@
-function SceneMovies() {
+function SceneMovieTypes() {
 };
 
-SceneMovies.prototype.initialize = function () {
-    alert("SceneMovies.initialize()");
+SceneMovieTypes.carousel = null;
+SceneMovieTypes.isRotatingCarousel = false;
+SceneMovieTypes.focusElements = [["back", "movietypes_focusElement_1"],
+                               ["tv", "movietypes_focusElement_2"],
+                               ["musk", "movietypes_focusElement_3"],
+                               ["carousel", "movietypes_focusElement_4", "movietypes_focusElement_5"]];
+SceneMovieTypes.movieTypesInfo = [];
+
+SceneMovieTypes.currentFocusElementId = 0;
+
+
+SceneMovieTypes.prototype.initialize = function () {
+    alert("SceneMovieTypes.initialize()");
     
     //Parsing the xml and adding images to html page
-    SceneMovies.ParseXML("XML/Movies_carousel.xml");
+    SceneMovieTypes.ParseXML("XML/MovieTypes_carousel.xml");
+    
+    SceneMovieTypes.updateFocusElements();
+    
+    SceneMovieTypes.updateTextFields();
 };
 
-SceneMovies.carousel = null;
+SceneMovieTypes.updateTextFields = function() {
+	var d = new Date();
+	var n = d.getMonth();
+	
+	$("#month_name_movietypes").text(Languages["month"][n-1][AppData.language]);
+	$("#movies_title_text").text(Languages["movies_title_text"][AppData.language]);
+	$("#back_to_prev_menu_movietypes").text(Languages["back_to_prev_menu_movietypes"][AppData.language]);
+	$("#home_to_main_menu_movietypes").text(Languages["home_to_main_menu_movietypes"][AppData.language]);
+};
 
-SceneMovies.launchCarousel = function() {
-	//Launcing the carousel
-	SceneMovies.carousel = $("#carouselM > *").rondell({
+
+SceneMovieTypes.rotateCarousel = function() {
+	
+	if (SceneMovieTypes.isRotatingCarousel) 
+	{
+		SceneMovieTypes.carousel.shiftRight();
+		
+		setTimeout(function() {
+			SceneMovieTypes.rotateCarousel();
+		}, Constants.carouselInterval);
+	
+		SceneMovieTypes.updateText();
+	}
+};
+
+SceneMovieTypes.startRotatingCarousel = function() {
+	if (SceneMovieTypes.currentFocusElementId == 3)
+		return;
+	
+	SceneMovieTypes.isRotatingCarousel = true;
+	
+	setTimeout(function() {
+		SceneMovieTypes.rotateCarousel();
+	}, Constants.carouselInterval);
+};
+
+SceneMovieTypes.stopRotatingCarousel = function() {
+	SceneMovieTypes.isRotatingCarousel = false;
+};
+
+//Here we update the title text
+SceneMovieTypes.updateText = function() {
+	//$("#bottom_carousel_text").text(SceneMovieTypes.movieTypesInfo[SceneMovieTypes.carousel.currentLayer - 1]);
+	
+	var textId = SceneMovieTypes.movieTypesInfo[SceneMovieTypes.carousel.currentLayer - 1];
+	document.getElementById("bottom_carousel_text").innerHTML = Languages[textId][AppData.language];
+};
+
+//This method hide all unfocused elements and shows the focused one
+SceneMovieTypes.updateFocusElements = function() {
+    for (var i = 0; i < SceneMovieTypes.focusElements.length; i++)
+    {
+    	if (i == SceneMovieTypes.currentFocusElementId)
+    	{
+    		$("#"+SceneMovieTypes.focusElements[i][1]).show();
+    		if (SceneMovieTypes.focusElements[i][2])
+    		{
+    			$("#"+SceneMovieTypes.focusElements[i][2]).show();
+    			SceneMovieTypes.stopRotatingCarousel();
+    		}
+    	} else {
+    		$("#"+SceneMovieTypes.focusElements[i][1]).hide();
+    		
+    		if (SceneMovieTypes.focusElements[i][2])
+    		{
+    			$("#"+SceneMovieTypes.focusElements[i][2]).hide();
+    		}
+    	}  	
+    }
+};
+
+
+SceneMovieTypes.launchCarousel = function() {
+	//Launching the carousel
+	SceneMovieTypes.carousel = $("#carouselMT > *").rondell({
       preset: "carousel",
       size: {
-    	  width: 1220,
-          height: 448  
+    	  width: 1520,
+          height: 530  
       },
       scaling: 1,
       itemProperties: {
     	  size: {
-    		  width: 797,
-    		  height: 448
+    		  width: 914,
+    		  height: 514
        	  }
       },
       center: {
-    	  left: 610,
-    	  top: 224
+    	  left: 760,
+    	  top: 265
       },
       radius: {
-    	  x: 300
+    	  x: 400
       },
       autoRotation: {
-    	  enabled: true,
-    	  delay: Constants.carouselInterval
+    	  enabled: false
       }
     });
 
+	SceneMovieTypes.startRotatingCarousel();
+	SceneMovieTypes.updateText();
+	
 	$(".loaderImg").hide();
 };
 
-SceneMovies.ParseXML = function (xmlURL) {
+SceneMovieTypes.ParseXML = function (xmlURL) {
 
     $.ajax({
         type: "get",
@@ -52,12 +139,13 @@ SceneMovies.ParseXML = function (xmlURL) {
                 $(xml).find("image").each(function(){ // loop
                 	var src = $(this).attr("src");
                 	
-                	$("#carouselM").append('<a rel="rondell_1" href="#"><img src="'+src+'" width="914" height="514" class="carouselImage"/></a>');
+                	$("#carouselMT").append('<a rel="rondell_1" href="#"><img src="'+src+'" width="914" height="514" class="carouselImage"/></a>');
                     
+                	SceneMovieTypes.movieTypesInfo.push([$(this).attr("id")]);
                 });
             }
             
-            SceneMovies.launchCarousel();
+            SceneMovieTypes.launchCarousel();
         },
         error: function(){
             alert("xml error!!");
@@ -65,38 +153,134 @@ SceneMovies.ParseXML = function (xmlURL) {
     });
 };
 
-
-SceneMovies.prototype.handleShow = function (data) {
-    alert("SceneMovies.handleShow()");
+SceneMovieTypes.prototype.keyLeftPress = function() {
+	var focusedId = SceneMovieTypes.currentFocusElementId;
+	if (focusedId <= 2)
+	{
+		focusedId = focusedId == 0 ? 2 : focusedId - 1;
+	} else {
+		//Shift Carousel Left
+		SceneMovieTypes.carousel.shiftLeft();
+		SceneMovieTypes.updateText();
+	}
+	SceneMovieTypes.currentFocusElementId = focusedId;
+	SceneMovieTypes.updateFocusElements();	
+};
+SceneMovieTypes.prototype.keyRightPress = function() {
+	var focusedId = SceneMovieTypes.currentFocusElementId;
+	if (focusedId <= 2)
+	{
+		focusedId = focusedId == 2 ? 0 : focusedId + 1;
+	} else {
+		//Shift Carousel Right
+		SceneMovieTypes.carousel.shiftRight();
+		SceneMovieTypes.updateText();
+	}	
+	SceneMovieTypes.currentFocusElementId = focusedId;
+	SceneMovieTypes.updateFocusElements();
+};
+SceneMovieTypes.prototype.keyUpPress = function() {
+	if (SceneMovieTypes.currentFocusElementId <= 2)
+	{
+		//Carousel
+		SceneMovieTypes.currentFocusElementId = 3;
+		SceneMovieTypes.stopRotatingCarousel();
+	} else {
+		//Middle menu
+		SceneMovieTypes.currentFocusElementId = 0;
+		SceneMovieTypes.startRotatingCarousel();
+	}	
+	SceneMovieTypes.updateFocusElements();
+	
+};
+SceneMovieTypes.prototype.keyDownPress = function() {
+	if (SceneMovieTypes.currentFocusElementId <= 2)
+	{
+		//Carousel
+		SceneMovieTypes.currentFocusElementId = 3;
+		SceneMovieTypes.stopRotatingCarousel();
+	} else {
+		//Top menu
+		SceneMovieTypes.currentFocusElementId = 0;
+		SceneMovieTypes.startRotatingCarousel();
+	}	
+	SceneMovieTypes.updateFocusElements();		
+};
+SceneMovieTypes.prototype.keyEnterPress = function() {
+	
+	switch (SceneMovieTypes.currentFocusElementId)
+	{
+		case 0:
+			//go back
+			AppData.previousScreen = 'MovieTypes';
+			Controller.changeScene(AppData.previousScreen);
+			break;
+		case 1:
+			//goto TV channels screen
+			AppData.previousScreen = 'MovieTypes';
+			Controller.changeScene('TVchannels');
+			break;
+		case 2:
+			//goto Musik screen
+			break;
+		case 3:
+			//Carousel - select video type
+			AppData.previousScreen = 'MovieTypes';
+			AppData.selectedItem = SceneMovieTypes.movieTypesInfo[SceneMovieTypes.carousel.currentLayer - 1];
+			//alert(AppData.selectedItem);
+			Controller.changeScene('Movies');
+			break;
+	}
+};
+SceneMovieTypes.prototype.keyHomePress = function() {
+	Controller.changeScene('MainMenu');
+};
+SceneMovieTypes.prototype.keyBackPress = function() {
+	//go back
+	AppData.previousScreen = 'MovieTypes';
+	Controller.changeScene(AppData.previousScreen);
 };
 
-SceneMovies.prototype.handleHide = function () {
-    alert("SceneMovies.handleHide()");
-};
 
-SceneMovies.prototype.handleFocus = function () {
-    alert("SceneMovies.handleFocus()");
-};
-
-SceneMovies.prototype.handleBlur = function () {
-    alert("SceneMovies.handleBlur()");
-};
-
-SceneMovies.prototype.handleKeyDown = function (keyCode) {
-    alert("SceneMovies.handleKeyDown(" + keyCode + ")");
+SceneMovieTypes.prototype.handleKeyDown = function (keyCode) {
+    alert("SceneMovieTypes.handleKeyDown(" + keyCode + ")");
     switch (keyCode) {
-        case sf.key.LEFT:
-        	SceneMovies.carousel.shiftLeft();
-            break;
-        case sf.key.RIGHT:
-        	SceneMovies.carousel.shiftRight();
-            break;
-        case sf.key.UP:
-            break;
-        case sf.key.DOWN:
-            break;
-        case sf.key.ENTER:
-        	//Controller.changeScene('MainMenu');
-            break;
+	    case sf.key.LEFT:
+	    	this.keyLeftPress();
+	        break;
+	    case sf.key.RIGHT:
+	    	this.keyRightPress();
+	        break;
+	    case sf.key.UP:
+	    	this.keyUpPress();
+	        break;
+	    case sf.key.DOWN:
+	    	this.keyDownPress();
+	        break;
+	    case sf.key.ENTER:
+	    	this.keyEnterPress();
+	        break;
+	    case sf.key.BACK:
+	    	this.keyBackPress();
+	    	break;
+	    case sf.key.HOME:
+	    	this.keyHomePress();
+	    	break;
     }
+};
+
+SceneMovieTypes.prototype.handleShow = function (data) {
+    alert("SceneMovieTypes.handleShow()");
+};
+
+SceneMovieTypes.prototype.handleHide = function () {
+    alert("SceneMovieTypes.handleHide()");
+};
+
+SceneMovieTypes.prototype.handleFocus = function () {
+    alert("SceneMovieTypes.handleFocus()");
+};
+
+SceneMovieTypes.prototype.handleBlur = function () {
+    alert("SceneMovieTypes.handleBlur()");
 };

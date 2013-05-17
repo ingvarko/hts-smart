@@ -13,4 +13,278 @@ body
 	height: 1080px;
 	background-image: url("../../images/background.png");
 }
+.channelsContainer {
+	width: 1920px;
+	height: 790px;
+}
+.channelsBar {
+	width: 1920px;
+	height: 750px;
+}
+.listItemTD {
+	width: 400px;
+	padding-top: 130px;
+}
+.channelList {
+	width: 400px;
+	height: 650px;
+	position: relative;
+}
+.channelsView {
+	width: 1420px;
+}
+.tvListItem {
+	position: absolute;
+	width: 300px;
+	overflow: hidden;
+	font-size: 38px;
+	font-family: LatoLig.ttf;
+	font-weight: bold;
+	color: #ffffff;
+	text-align: left;
+	padding-left: 140px;
+	text-transform: uppercase;
+}
+.horizontal_line {
+	padding-left: 60px;
+	position: absolute;
+}
+
+.tvListItem_1 {
+	position: absolute;
+	width: 300px;
+	overflow: hidden;
+	font-size: 38px;
+	font-family: LatoLig.ttf;
+	font-weight: bold;
+	color: #ffffff;
+	text-align: left;
+	padding-left: 140px;
+	text-transform: uppercase;
+	left: 0;
+}
+.tvListItem_2 {
+	position: absolute;
+	width: 300px;
+	overflow: hidden;
+	font-size: 38px;
+	font-family: LatoLig.ttf;
+	font-weight: bold;
+	color: #ffffff;
+	text-align: left;
+	padding-left: 140px;
+	text-transform: uppercase;
+	left: 0;
+}
+.tvListItem_3 {
+	position: absolute;
+	width: 300px;
+	overflow: hidden;
+	font-size: 38px;
+	font-family: LatoLig.ttf;
+	font-weight: bold;
+	color: #ffffff;
+	text-align: left;
+	padding-left: 140px;
+	text-transform: uppercase;
+	left: 0;
+}
+.tvListItem_4 {
+	position: absolute;
+	width: 300px;
+	overflow: hidden;
+	font-size: 38px;
+	font-family: LatoLig.ttf;
+	font-weight: bold;
+	color: #ffffff;
+	text-align: left;
+	padding-left: 140px;
+	text-transform: uppercase;
+	left: 0;
+}
+.tvListItem_5 {
+	position: absolute;
+	width: 300px;
+	overflow: hidden;
+	font-size: 38px;
+	font-family: LatoLig.ttf;
+	font-weight: bold;
+	color: #ffffff;
+	text-align: left;
+	padding-left: 140px;
+	text-transform: uppercase;
+	left: 0;
+}
+.tvListItem_6 {
+	position: absolute;
+	width: 300px;
+	overflow: hidden;
+	font-size: 38px;
+	font-family: LatoLig.ttf;
+	font-weight: bold;
+	color: #ffffff;
+	text-align: left;
+	padding-left: 140px;
+	text-transform: uppercase;
+	left: 0;
+}
+
+#channel_line_1 {
+	left: 0;
+	top: 50px;
+}
+#channel_line_2 {
+	left: 0;
+	top: 130px;
+}
+#channel_line_3 {
+	left: 0;
+	top: 210px;
+}
+#channel_line_4 {
+	left: 0;
+	top: 290px;
+}
+#channel_line_5 {
+	left: 0;
+	top: 370px;
+}
+
+.active_channel {
+	position: absolute;
+	left: 90px;
+}
+
+.channelsImageList {
+	width: 1300px;
+	height: 790px;
+	overflow: hidden;
+	position: relative;
+}
+.channelsImageListMask {
+	width: 1300px;
+	height: 790px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 1000; 
+}
+#channel_img_1 {
+	position: absolute;
+	top: 0;
+	left: -145px;
+}
+#channel_img_2 {
+	position: absolute;
+	top: 400px;
+	left: -145px;
+}
+#channel_img_3 {
+	position: absolute;
+	top: 0;
+	left: 255px;
+}
+#channel_img_4 {
+	position: absolute;
+	top: 400px;
+	left: 255px;
+}
+#channel_img_5 {
+	position: absolute;
+	top: 0;
+	left: 655px;
+}
+#channel_img_6 {
+	position: absolute;
+	top: 400px;
+	left: 655px;
+}
+#channel_img_7 {
+	position: absolute;
+	top: 0;
+	left: 1055px;
+}
+#channel_img_8 {
+	position: absolute;
+	top: 400px;
+	left: 1055px;
+}
+.bottomBarTV
+{
+	width: 1920px;
+	height: 50px;
+}
+.channel_img_inner {
+	position: relative;
+	width: 390px;
+	height: 390px;
+}
+.channel_img_bg {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+.channel_img_pic {
+	position: absolute;
+	top: 26px;
+	left: 26px;
+}
+.channel_img_mask {
+	position: absolute;
+	top: 280px;
+	left: 26px;
+}
+.channel_img_text {
+	position: absolute;
+	top: 310px;
+	left: 45px;
+	width: 300px;
+	height: 37px;
+	overflow: hidden;
+	font-size: 29px;
+	font-family: LatoLig.ttf;
+	color: #ffffff;
+	text-align: left;
+}
+
+.left_mask_bg {
+	position: absolute;
+	overflow: hidden;
+	top: -55px;
+	left: -65px;
+	width: 310px;
+	height: 845px;
+	z-index: 10001;
+}
+.right_mask_bg {
+	position: absolute;
+	overflow: hidden;
+	top: -24px;
+	left: 1050px;
+	width: 260px;
+	height: 845px;
+	z-index: 10001;
+}
+.right_mask_inner {
+	position: relative;
+}
+.right_mask_inner_img {
+	position: absolute;
+	left: -65px;
+}
+.channels_left_arrow {
+	position: absolute;
+	top: 330px;
+	left: 80px;
+	z-index: 10005;
+}
+.channels_right_arrow {
+	position: absolute;
+	top: 330px;
+	right: 80px;
+	z-index: 10005;
+}
+
+
+
 

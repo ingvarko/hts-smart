@@ -29,15 +29,15 @@
 					<tr>
 						<td></td>
 						<td class="backBtnShadow">
-							<img src="images/anchor_shadow.png" width="68" height="22"/>
+							<img src="images/anchor_shadow.png" id="movies_focusElement_1" width="68" height="22"/>
 						</td>
 						<td></td>
 						<td class="tvBtnShadow">
-							<img src="images/anchor_shadow.png" width="68" height="22"/>
+							<img src="images/anchor_shadow.png" id="movies_focusElement_2" width="68" height="22"/>
 						</td>
 						<td></td>
 						<td class="musikBtnShadow">
-							<img src="images/anchor_shadow.png" width="68" height="22"/>
+							<img src="images/anchor_shadow.png" id="movies_focusElement_3" width="68" height="22"/>
 						</td>
 						<td></td>
 					</tr>
@@ -55,7 +55,7 @@
 					</tr>
 					<tr>
 						<td align="left" class="date">
-							29 February 2012
+							29 <span id="month_name_movies"></span> 2012
 						</td>
 					</tr>
 				</table>
@@ -65,9 +65,7 @@
 	
 	<table border="0" cellpadding="0" cellspacing="0" class="categoryTypeTitle">
 		<tr>
-			<td align="center" class="categoryTypeTitleText">
-				Action Movies
-			</td>
+			<td align="center" class="categoryTypeTitleText" id="movies_category_title_text"></td>
 		</tr>
 	</table>
 	
@@ -86,31 +84,23 @@
 		</tr>
 		<tr>
 			<td valign="top" align="left" class="shortArrowLeftShadow">
-				<img src="images/big_shadow.png" width="131" height="24"/>
+				<img src="images/big_shadow.png" id="movies_focusElement_4" width="131" height="24"/>
 			</td>
 			<td valign="top" align="right" class="shortArrowRightShadow">
-				<img src="images/big_shadow.png" width="131" height="24"/>
+				<img src="images/big_shadow.png" id="movies_focusElement_5" width="131" height="24"/>
 			</td>
 		</tr>
 	</table>
 	<img src="images/img_bottom_shadow.png" width="775" height="200" class="small_carousel_mask"/>
-	<div class="bottom_small_carousel_text">Irronman 3</div>
+	<div id="movie_name_text" class="bottom_small_carousel_text"></div>
 	<div align="center" class="descriptionText">
-		<div class="descriptionTextInner">
-			A self-described genius, billionaire, playboy,and philanthropist
-			who escaped captivity with a suit or armor he created and now
-			struggles to keep  his technology in the right hands. 
-		</div>
+		<div id="movie_description_text" class="descriptionTextInner"></div>
 	</div>
 	
 	<table border="0" cellpadding="0" cellspacing="0" class="bottomBar">
 		<tr>
-			<td align="right" valign="bottom" class="bottomBackText">
-				Press BACK to previous menu
-			</td>
-			<td align="left" valign="bottom" class="bottomHomeText">
-				Press HOME to main menu
-			</td>
+			<td align="right" valign="bottom" class="bottomBackText" id="back_to_prev_menu_movies"></td>
+			<td align="left" valign="bottom" class="bottomHomeText" id="home_to_main_menu_movies"></td>
 		</tr>
 	</table>
 </div>

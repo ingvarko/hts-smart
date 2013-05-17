@@ -612,7 +612,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
             Starts/pauses autorotation.
             Updates active rondell id.
       */
-
+    	
       var paused;
       paused = this.autoRotation.paused;
       if (e.type === "mouseenter") {

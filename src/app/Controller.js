@@ -11,11 +11,11 @@ Controller.initialize = function () {
 Controller.start = function () {
 	alert("Controller.start()");
 	
-	//Controller.changeScene('HomePage');
+	Controller.changeScene('HomePage');
 	//Controller.changeScene('MainMenu');
 	//Controller.changeScene('MovieTypes');
 	//Controller.changeScene('Movies');
-	Controller.changeScene('TVchannels');
+	//Controller.changeScene('TVchannels');
 };
 Controller.changeScene = function(newScene) {
 	$(".loaderImg").show();

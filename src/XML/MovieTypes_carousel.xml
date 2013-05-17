@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <carousel>
 	<images>
-		<image src="images/movieTypes/action.png"/>
-		<image src="images/movieTypes/2.png"/>
-		<image src="images/movieTypes/3.png"/>
-		<image src="images/movieTypes/4.png"/>
-		<image src="images/movieTypes/5.png"/>
+		<image src="images/movieTypes/action.jpg" id="action"/>
+		<image src="images/movieTypes/cartoons.jpg" id="cartoons"/>
+		<image src="images/movieTypes/comedy.jpg" id="comedy"/>
+		<image src="images/movieTypes/comics.jpg" id="comics"/>
+		<image src="images/movieTypes/fantasy.jpg" id="fantasy"/>
 	</images>
 </carousel>

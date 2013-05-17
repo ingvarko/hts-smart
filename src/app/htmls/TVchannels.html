@@ -13,8 +13,8 @@
 						<td class="secondLine">
 							<img src="images/vertical_line.png" width="1" height="80"/>
 						</td>
-						<td class="tvBtn">
-							<img src="images/TV_small_icon.png" width="68" height="73"/>
+						<td class="movieBtn">
+							<img src="images/Media_small_icon.png" width="77" height="60"/>
 						</td>
 						<td class="thirdLine">
 							<img src="images/vertical_line.png" width="1" height="80"/>
@@ -29,15 +29,15 @@
 					<tr>
 						<td></td>
 						<td class="backBtnShadow">
-							<img src="images/anchor_shadow.png" width="68" height="22"/>
+							<img src="images/anchor_shadow.png" id="tv_focusElement_1" width="68" height="22"/>
 						</td>
 						<td></td>
-						<td class="tvBtnShadow">
-							<img src="images/anchor_shadow.png" width="68" height="22"/>
+						<td class="movieBtnShadow">
+							<img src="images/anchor_shadow.png" id="tv_focusElement_2" width="68" height="22"/>
 						</td>
 						<td></td>
 						<td class="musikBtnShadow">
-							<img src="images/anchor_shadow.png" width="68" height="22"/>
+							<img src="images/anchor_shadow.png" id="tv_focusElement_3" width="68" height="22"/>
 						</td>
 						<td></td>
 					</tr>
@@ -55,55 +55,137 @@
 					</tr>
 					<tr>
 						<td align="left" class="date">
-							29 February 2012
+							29 <span id="month_name_tv"></span> 2012
 						</td>
 					</tr>
 				</table>
 			</td>
 		</tr>
 	</table>
+	<div class="channelsContainer">
+		<table border="0" cellpadding="0" cellspacing="0" class="channelsBar">
+			<tr>
+				<td valign="top" align="center" class="listItemTD">
+					<div class="channelList">
+						<div class="tvListItem_1" id="channel_1">NEWS</div>
+						<div class="tvListItem_2" id="channel_2">SPORT</div>
+						<div class="tvListItem_3" id="channel_3">Children</div>
+						<div class="tvListItem_4" id="channel_4">Movies</div>
+						<div class="tvListItem_5" id="channel_5">Science</div>
+						<div class="tvListItem_6" id="channel_6">Sci-Fy</div>
+
+						<div align="left" class="active_channel" id="active_channel">
+							<img src="images/active_list_item.png" width="34" height="30"/>
+						</div>
+						
+						<div align="left" class="horizontal_line" id="channel_line_1">
+							<img src="images/horizontal_line.png" width="335" height="3"/>
+						</div>
+						<div align="left" class="horizontal_line" id="channel_line_2">
+							<img src="images/horizontal_line.png" width="335" height="3"/>
+						</div>
+						<div align="left" class="horizontal_line" id="channel_line_3">
+							<img src="images/horizontal_line.png" width="335" height="3"/>
+						</div>
+						<div align="left" class="horizontal_line" id="channel_line_4">
+							<img src="images/horizontal_line.png" width="335" height="3"/>
+						</div>
+						<div align="left" class="horizontal_line" id="channel_line_5">
+							<img src="images/horizontal_line.png" width="335" height="3"/>
+						</div>
+					</div>
+				</td>
+				<td class="chanelsView">
+					<div class="channelsImageList">
+						<div class="left_mask_bg">
+							<img src="images/left_mask_bg.png" width="400" height="874"/>
+						</div>
+						<div class="right_mask_bg">
+							<div class="right_mask_inner">
+								<img src="images/right_mask_bg.png" class="right_mask_inner_img" width="358" height="826"/>
+							</div>
+						</div>
+						<div class="channels_left_arrow">
+							<img src="images/arrow_left.png" width="68" height="118"/>
+						</div>
+						<div class="channels_right_arrow">
+							<img src="images/arrow_right.png" width="68" height="118"/>
+						</div>
+						<div class="channel_img_1" id="channel_img_1">
+							<div class="channel_img_inner">
+								<img src="images/channel_bg.png" width="390" height="390" class="channel_img_bg" />
+								<img src="images/channels/sport_news.png" class="channel_img_pic" width="337" height="337"/>
+								<img src="images/tv_channels_mask.png" class="channel_img_mask" width="337" height="83"/>
+								<div class="channel_img_text">New channel 2</div>
+							</div>
+						</div>
+						<div class="channel_img_2" id="channel_img_2">
+							<div class="channel_img_inner">
+								<img src="images/channel_bg.png" width="390" height="390" class="channel_img_bg" />
+								<img src="images/channels/sport_motors.png" class="channel_img_pic" width="337" height="337"/>
+								<img src="images/tv_channels_mask.png" class="channel_img_mask" width="337" height="83"/>
+								<div class="channel_img_text">Crazy Motocross 2</div>
+							</div>
+						</div>
+						<div class="channel_img_3" id="channel_img_3">
+							<div class="channel_img_inner">
+								<img src="images/active_channel_bg.png" width="390" height="390" class="channel_img_bg" />
+								<img src="images/channels/sport_eurosport.png" class="channel_img_pic" width="337" height="337"/>
+								<img src="images/tv_channels_mask.png" class="channel_img_mask" width="337" height="83"/>
+								<div class="channel_img_text">Eurosport</div>
+							</div>
+						</div>
+						<div class="channel_img_4" id="channel_img_4">
+							<div class="channel_img_inner">
+								<img src="images/channel_bg.png" width="390" height="390" class="channel_img_bg" />
+								<img src="images/channels/sport_eurosport2.png" class="channel_img_pic" width="337" height="337"/>
+								<img src="images/tv_channels_mask.png" class="channel_img_mask" width="337" height="83"/>
+								<div class="channel_img_text">Eurosport 2</div>
+							</div>
+						</div>
+						<div class="channel_img_5" id="channel_img_5">
+							<div class="channel_img_inner">
+								<img src="images/channel_bg.png" width="390" height="390" class="channel_img_bg" />
+								<img src="images/channels/sport_news.png" class="channel_img_pic" width="337" height="337"/>
+								<img src="images/tv_channels_mask.png" class="channel_img_mask" width="337" height="83"/>
+								<div class="channel_img_text">News channel</div>
+							</div>
+						</div>
+						<div class="channel_img_6" id="channel_img_6">
+							<div class="channel_img_inner">
+								<img src="images/channel_bg.png" width="390" height="390" class="channel_img_bg" />
+								<img src="images/channels/sport_motors.png" class="channel_img_pic" width="337" height="337"/>
+								<img src="images/tv_channels_mask.png" class="channel_img_mask" width="337" height="83"/>
+								<div class="channel_img_text">Crazy Motocross Crazy Motocross Crazy Motocross</div>
+							</div>
+						</div>
+						<div class="channel_img_7" id="channel_img_7">
+							<div class="channel_img_inner">
+								<img src="images/channel_bg.png" width="390" height="390" class="channel_img_bg" />
+								<img src="images/channels/sport_eurosport.png" class="channel_img_pic" width="337" height="337"/>
+								<img src="images/tv_channels_mask.png" class="channel_img_mask" width="337" height="83"/>
+								<div class="channel_img_text">Eurosport 4</div>
+							</div>
+						</div>
+						<div class="channel_img_8" id="channel_img_8">
+							<div class="channel_img_inner">
+								<img src="images/channel_bg.png" width="390" height="390" class="channel_img_bg" />
+								<img src="images/channels/sport_eurosport2.png" class="channel_img_pic" width="337" height="337"/>
+								<img src="images/tv_channels_mask.png" class="channel_img_mask" width="337" height="83"/>
+								<div class="channel_img_text">Eurosport 4</div>
+							</div>
+						</div>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
 	
-	<table border="0" cellpadding="0" cellspacing="0" class="categoryTitle">
-		<tr>
-			<td align="center" class="categoryTitleText">
-				Movies
-			</td>
-		</tr>
-	</table>
 	
-	<table border="0" cellpadding="0" cellspacing="0" class="galeryBar">
+	<table border="0" cellpadding="0" cellspacing="0" class="bottomBarTV">
 		<tr>
-			<td valign="bottom" align="left" class="arrowLeft">
-				<img src="images/arrow_left.png" width="68" height="118"/>
-			</td>
-			<td rowspan="2" class="galeryArea">
-				<div id="carouselMT">
-				</div>
-			</td>
-			<td valign="bottom" align="right" class="arrowRight">
-				<img src="images/arrow_right.png" width="68" height="118"/>
-			</td>
-		</tr>
-		<tr>
-			<td valign="top" align="left" class="arrowLeftShadow">
-				<img src="images/big_shadow.png" width="131" height="24"/>
-			</td>
-			<td valign="top" align="right" class="arrowRightShadow">
-				<img src="images/big_shadow.png" width="131" height="24"/>
-			</td>
-		</tr>
-	</table>
-	<img src="images/img_bottom_shadow.png" width="880" height="219" class="carousel_mask"/>
-	<div class="bottom_carousel_text">Action</div>
-	
-	<table border="0" cellpadding="0" cellspacing="0" class="bottomBar">
-		<tr>
-			<td align="right" valign="bottom" class="bottomBackText">
-				Press BACK to previous menu
-			</td>
-			<td align="left" valign="bottom" class="bottomHomeText">
-				Press HOME to main menu
-			</td>
+			<td align="right" valign="bottom" class="bottomBackText" id="back_to_prev_menu_tv"></td>
+			<td align="left" valign="bottom" class="bottomHomeText" id="home_to_main_menu_tv"></td>
 		</tr>
 	</table>
 </div>

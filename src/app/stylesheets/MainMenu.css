@@ -35,7 +35,7 @@ body
 	padding-top: 40px;
 }
 .musik_icon {
-	width: 160px;
+	width: 170px;
 	padding-left: 15px;
 	padding-top: 30px;
 }
@@ -72,15 +72,23 @@ body
 }
 .tv_icon_shadow {
 	padding-left: 5px;
+	width: 131px;
+	height: 30px;
 }
 .media_icon_shadow {
 	padding-left: 10px;
+	width: 131px;
+	height: 30px;
 }
 .musik_icon_shadow {
 	padding-left: 0;
+	width: 131px;
+	height: 30px;
 }
 .service_icon_shadow {
 	padding-left: 15px;
+	width: 131px;
+	height: 30px;
 }
 .other_services {
 	font-size: 30px;
