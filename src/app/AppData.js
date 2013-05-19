@@ -8,5 +8,5 @@ AppData.initialize = function () {
 AppData = {
 	selectedItem : null,
 	previousScreen: "",
-	language: 0 //0 - english, 1 - ukrainian, 2 - russian
+	language: 1 //0 - english, 1 - ukrainian, 2 - russian
 };
