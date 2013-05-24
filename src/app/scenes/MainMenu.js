@@ -1,6 +1,8 @@
 function SceneMainMenu() {
 };
 
+SceneMainMenu.isLangMenuShown = false;
+SceneMainMenu.currentLangSelector = null;
 SceneMainMenu.carousel = null;
 SceneMainMenu.isRotatingCarousel = false;
 SceneMainMenu.focusElements = [["info", "mainmenu_focusElement_1"],
@@ -28,6 +30,7 @@ SceneMainMenu.updateTextFields = function() {
 	var d = new Date();
 	var n = d.getMonth();
 	
+	$("#language_text_label").text(Languages["langTexts"][AppData.language]);
 	$("#month_name_mainmenu").text(Languages["month"][n-1][AppData.language]);
 	$("#check_out_services").text(Languages["check_out_services"][AppData.language]);
 };
@@ -141,8 +144,43 @@ SceneMainMenu.ParseXML = function (xmlURL) {
     });
 };
 
+SceneMainMenu.updateLangMenuView = function() {
+	document.getElementById("active_line_main_menu").style.top = Constants.langMenuSelector[SceneMainMenu.currentLangSelector] + 'px';
+	document.getElementById("selected_lang_main_menu").style.top = Constants.langMenuActive[AppData.language] + 'px';		
+};
+
+SceneMainMenu.showLanguageMenu = function() {
+	SceneMainMenu.isLangMenuShown = true;
+	SceneMainMenu.currentLangSelector = AppData.language;
+	
+	SceneMainMenu.updateLangMenuView();
+
+	$("#language_menu_mainmenu").fadeIn('fast');
+};
+
+SceneMainMenu.hideLanguageMenu = function() {
+	SceneMainMenu.isLangMenuShown = false;
+	
+	$("#language_menu_mainmenu").fadeOut('fast');
+};
+
+SceneMainMenu.setLanguage = function() {
+	
+	if (SceneMainMenu.currentLangSelector != AppData.language)
+	{
+		AppData.language = SceneMainMenu.currentLangSelector; 
+		SceneMainMenu.updateTextFields();
+	}
+	
+	SceneMainMenu.hideLanguageMenu();
+};
 
 SceneMainMenu.prototype.keyLeftPress = function() {
+	if (SceneMainMenu.isLangMenuShown)
+	{
+		return;
+	}
+	
 	var focusedId = SceneMainMenu.currentFocusElementId;
 	if (focusedId <= 2)
 	{
@@ -157,6 +195,11 @@ SceneMainMenu.prototype.keyLeftPress = function() {
 	SceneMainMenu.updateFocusElements();	
 };
 SceneMainMenu.prototype.keyRightPress = function() {
+	if (SceneMainMenu.isLangMenuShown)
+	{
+		return;
+	}
+
 	var focusedId = SceneMainMenu.currentFocusElementId;
 	if (focusedId <= 2)
 	{
@@ -171,6 +214,18 @@ SceneMainMenu.prototype.keyRightPress = function() {
 	SceneMainMenu.updateFocusElements();
 };
 SceneMainMenu.prototype.keyUpPress = function() {
+	
+	if (SceneMainMenu.isLangMenuShown)
+	{
+		SceneMainMenu.currentLangSelector--;
+		if (SceneMainMenu.currentLangSelector == -1)
+			SceneMainMenu.currentLangSelector = 2;
+		
+		SceneMainMenu.updateLangMenuView();
+		
+		return;
+	}
+	
 	var focusedId = SceneMainMenu.currentFocusElementId;
 	if (focusedId <= 2)
 	{
@@ -190,6 +245,18 @@ SceneMainMenu.prototype.keyUpPress = function() {
 	
 };
 SceneMainMenu.prototype.keyDownPress = function() {
+	
+	if (SceneMainMenu.isLangMenuShown)
+	{
+		SceneMainMenu.currentLangSelector++;
+		if (SceneMainMenu.currentLangSelector == 3)
+			SceneMainMenu.currentLangSelector = 0;
+		
+		SceneMainMenu.updateLangMenuView();
+		
+		return;
+	}
+	
 	var focusedId = SceneMainMenu.currentFocusElementId;
 	if (focusedId <= 2)
 	{
@@ -219,6 +286,10 @@ SceneMainMenu.prototype.keyEnterPress = function() {
 			break;
 		case 2:
 			//Show language menu
+			if (!SceneMainMenu.isLangMenuShown)
+				SceneMainMenu.showLanguageMenu();
+			else 
+				SceneMainMenu.setLanguage();
 			break;
 		case 3:
 			//goto TV channels screen
@@ -242,7 +313,8 @@ SceneMainMenu.prototype.keyEnterPress = function() {
 	}
 };
 SceneMainMenu.prototype.keyBackPress = function() {
-	
+	if (SceneMainMenu.isLangMenuShown)
+		SceneMainMenu.hideLanguageMenu();
 };
 SceneMainMenu.prototype.handleKeyDown = function (keyCode) {
     alert("SceneMainMenu.handleKeyDown(" + keyCode + ")");

@@ -96,7 +96,8 @@ body
 }
 .language
 {
-	width: 220px;
+	text-transform:uppercase;
+	padding-left: 40px;
 	text-align: right;
 	font-size: 40px;
 	font-weight: bold;
@@ -303,6 +304,55 @@ td.date
   border:10px solid #ffffff;	
 }
 
+.language_menu_div {
+	position: absolute;
+	top: 120px;
+	left: 250px;
+	display: none;
+}
+.language_menu_div_inner {
+	position: relative;
+}
+.menu_lang_text_eng {
+	position: absolute;
+	top: 30px;
+	left: 100px;
+	font-size: 40px;
+	font-weight: bold;
+	color: #f6f2e9;
+	text-shadow: 3px 7px #222;
+	z-index: 10001;
+}
+.menu_lang_text_ukr {
+	position: absolute;
+	top: 95px;
+	left: 100px;
+	font-size: 40px;
+	font-weight: bold;
+	color: #f6f2e9;
+	text-shadow: 3px 7px #222;
+	z-index: 10001;
+}
+.menu_lang_text_rus {
+	position: absolute;
+	top: 165px;
+	left: 100px;
+	font-size: 40px;
+	font-weight: bold;
+	color: #f6f2e9;
+	text-shadow: 3px 7px #222;
+	z-index: 10001;
+}
+.active_line {
+	position: absolute;
+	top: 140px;
+	left: 20px;
+}
+.selected_lang_menu_item {
+	position: absolute;
+	top: 165px;
+	left: 45px;
+}
 
 
 
