@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tv_categories>
+	<tv_category id="tv_news"/>
+	<tv_category id="tv_children"/>
+	<tv_category id="tv_sport"/>
+	<tv_category id="tv_movies"/>
+	<tv_category id="tv_sience"/>
+	<tv_category id="tv_sci-fy"/>
+	<tv_category id="tv_fun"/>
+	<tv_category id="tv_political"/>
+	<tv_category id="tv_musik"/>
+	<tv_category id="tv_other"/>
+</tv_categories>

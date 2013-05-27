@@ -67,15 +67,18 @@
 			<tr>
 				<td valign="top" align="center" class="listItemTD">
 					<div class="channelList">
-						<div class="tvListItem_1" id="channel_1">NEWS</div>
-						<div class="tvListItem_2" id="channel_2">SPORT</div>
-						<div class="tvListItem_3" id="channel_3">Children</div>
-						<div class="tvListItem_4" id="channel_4">Movies</div>
-						<div class="tvListItem_5" id="channel_5">Science</div>
-						<div class="tvListItem_6" id="channel_6">Sci-Fy</div>
+						<!--  <div class="tvListItem" id="channel_1">NEWS</div>
+						<div class="tvListItem" id="channel_2">SPORT</div>
+						<div class="tvListItem" id="channel_3">Children</div>
+						<div class="tvListItem" id="channel_4">Movies</div>
+						<div class="tvListItem" id="channel_5">Science</div>
+						<div class="tvListItem" id="channel_6">Sci-Fy</div>
+						<div class="tvListItem" id="channel_7">Test1</div>
+						<div class="tvListItem" id="channel_8">Test2</div>
+						<div class="tvListItem" id="channel_9">Test3</div>-->
 
 						<div align="left" class="active_channel" id="active_channel">
-							<img src="images/active_list_item.png" width="34" height="30"/>
+							<img src="images/active_list_item.png" id="tv_focusElement_4" width="34" height="30"/>
 						</div>
 						
 						<div align="left" class="horizontal_line" id="channel_line_1">
@@ -106,20 +109,26 @@
 							</div>
 						</div>
 						<div class="channels_left_arrow">
-							<img src="images/arrow_left.png" width="68" height="118"/>
+							<img src="images/arrow_left.png" width="68" height="118"/><br/>
+						</div>
+						<div class="channels_left_arrow_shadow">
+							<img src="images/big_shadow.png" id="tv_focusElement_5" width="131" height="24"/>
 						</div>
 						<div class="channels_right_arrow">
-							<img src="images/arrow_right.png" width="68" height="118"/>
+							<img src="images/arrow_right.png" width="68" height="118"/><br/>
 						</div>
-						<div class="channel_img_1" id="channel_img_1">
+						<div class="channels_right_arrow_shadow">
+							<img src="images/big_shadow.png" id="tv_focusElement_6" width="131" height="24"/>
+						</div>
+<!--  						<div class="channel_img" id="channel_img_1">
 							<div class="channel_img_inner">
 								<img src="images/channel_bg.png" width="390" height="390" class="channel_img_bg" />
 								<img src="images/channels/sport_news.png" class="channel_img_pic" width="337" height="337"/>
 								<img src="images/tv_channels_mask.png" class="channel_img_mask" width="337" height="83"/>
-								<div class="channel_img_text">New channel 2</div>
+								<div class="channel_img_text">News channel 2</div>
 							</div>
 						</div>
-						<div class="channel_img_2" id="channel_img_2">
+						<div class="channel_img" id="channel_img_2">
 							<div class="channel_img_inner">
 								<img src="images/channel_bg.png" width="390" height="390" class="channel_img_bg" />
 								<img src="images/channels/sport_motors.png" class="channel_img_pic" width="337" height="337"/>
@@ -127,7 +136,7 @@
 								<div class="channel_img_text">Crazy Motocross 2</div>
 							</div>
 						</div>
-						<div class="channel_img_3" id="channel_img_3">
+						<div class="channel_img" id="channel_img_3">
 							<div class="channel_img_inner">
 								<img src="images/active_channel_bg.png" width="390" height="390" class="channel_img_bg" />
 								<img src="images/channels/sport_eurosport.png" class="channel_img_pic" width="337" height="337"/>
@@ -135,7 +144,7 @@
 								<div class="channel_img_text">Eurosport</div>
 							</div>
 						</div>
-						<div class="channel_img_4" id="channel_img_4">
+						<div class="channel_img" id="channel_img_4">
 							<div class="channel_img_inner">
 								<img src="images/channel_bg.png" width="390" height="390" class="channel_img_bg" />
 								<img src="images/channels/sport_eurosport2.png" class="channel_img_pic" width="337" height="337"/>
@@ -143,7 +152,7 @@
 								<div class="channel_img_text">Eurosport 2</div>
 							</div>
 						</div>
-						<div class="channel_img_5" id="channel_img_5">
+						<div class="channel_img" id="channel_img_5">
 							<div class="channel_img_inner">
 								<img src="images/channel_bg.png" width="390" height="390" class="channel_img_bg" />
 								<img src="images/channels/sport_news.png" class="channel_img_pic" width="337" height="337"/>
@@ -151,7 +160,7 @@
 								<div class="channel_img_text">News channel</div>
 							</div>
 						</div>
-						<div class="channel_img_6" id="channel_img_6">
+						<div class="channel_img" id="channel_img_6">
 							<div class="channel_img_inner">
 								<img src="images/channel_bg.png" width="390" height="390" class="channel_img_bg" />
 								<img src="images/channels/sport_motors.png" class="channel_img_pic" width="337" height="337"/>
@@ -159,7 +168,7 @@
 								<div class="channel_img_text">Crazy Motocross Crazy Motocross Crazy Motocross</div>
 							</div>
 						</div>
-						<div class="channel_img_7" id="channel_img_7">
+						<div class="channel_img" id="channel_img_7">
 							<div class="channel_img_inner">
 								<img src="images/channel_bg.png" width="390" height="390" class="channel_img_bg" />
 								<img src="images/channels/sport_eurosport.png" class="channel_img_pic" width="337" height="337"/>
@@ -167,14 +176,14 @@
 								<div class="channel_img_text">Eurosport 4</div>
 							</div>
 						</div>
-						<div class="channel_img_8" id="channel_img_8">
+						<div class="channel_img" id="channel_img_8">
 							<div class="channel_img_inner">
 								<img src="images/channel_bg.png" width="390" height="390" class="channel_img_bg" />
 								<img src="images/channels/sport_eurosport2.png" class="channel_img_pic" width="337" height="337"/>
 								<img src="images/tv_channels_mask.png" class="channel_img_mask" width="337" height="83"/>
 								<div class="channel_img_text">Eurosport 4</div>
 							</div>
-						</div>
+						</div>-->
 					</div>
 				</td>
 			</tr>

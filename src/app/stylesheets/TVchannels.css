@@ -29,6 +29,7 @@ body
 	width: 400px;
 	height: 650px;
 	position: relative;
+	overflow: hidden;
 }
 .channelsView {
 	width: 1420px;
@@ -50,79 +51,14 @@ body
 	position: absolute;
 }
 
-.tvListItem_1 {
+.tvListItem {
 	position: absolute;
 	width: 300px;
 	overflow: hidden;
 	font-size: 38px;
 	font-family: LatoLig.ttf;
 	font-weight: bold;
-	color: #ffffff;
-	text-align: left;
-	padding-left: 140px;
-	text-transform: uppercase;
-	left: 0;
-}
-.tvListItem_2 {
-	position: absolute;
-	width: 300px;
-	overflow: hidden;
-	font-size: 38px;
-	font-family: LatoLig.ttf;
-	font-weight: bold;
-	color: #ffffff;
-	text-align: left;
-	padding-left: 140px;
-	text-transform: uppercase;
-	left: 0;
-}
-.tvListItem_3 {
-	position: absolute;
-	width: 300px;
-	overflow: hidden;
-	font-size: 38px;
-	font-family: LatoLig.ttf;
-	font-weight: bold;
-	color: #ffffff;
-	text-align: left;
-	padding-left: 140px;
-	text-transform: uppercase;
-	left: 0;
-}
-.tvListItem_4 {
-	position: absolute;
-	width: 300px;
-	overflow: hidden;
-	font-size: 38px;
-	font-family: LatoLig.ttf;
-	font-weight: bold;
-	color: #ffffff;
-	text-align: left;
-	padding-left: 140px;
-	text-transform: uppercase;
-	left: 0;
-}
-.tvListItem_5 {
-	position: absolute;
-	width: 300px;
-	overflow: hidden;
-	font-size: 38px;
-	font-family: LatoLig.ttf;
-	font-weight: bold;
-	color: #ffffff;
-	text-align: left;
-	padding-left: 140px;
-	text-transform: uppercase;
-	left: 0;
-}
-.tvListItem_6 {
-	position: absolute;
-	width: 300px;
-	overflow: hidden;
-	font-size: 38px;
-	font-family: LatoLig.ttf;
-	font-weight: bold;
-	color: #ffffff;
+	color: #5c4541;
 	text-align: left;
 	padding-left: 140px;
 	text-transform: uppercase;
@@ -169,45 +105,8 @@ body
 	left: 0;
 	z-index: 1000; 
 }
-#channel_img_1 {
+.channel_img {
 	position: absolute;
-	top: 0;
-	left: -145px;
-}
-#channel_img_2 {
-	position: absolute;
-	top: 400px;
-	left: -145px;
-}
-#channel_img_3 {
-	position: absolute;
-	top: 0;
-	left: 255px;
-}
-#channel_img_4 {
-	position: absolute;
-	top: 400px;
-	left: 255px;
-}
-#channel_img_5 {
-	position: absolute;
-	top: 0;
-	left: 655px;
-}
-#channel_img_6 {
-	position: absolute;
-	top: 400px;
-	left: 655px;
-}
-#channel_img_7 {
-	position: absolute;
-	top: 0;
-	left: 1055px;
-}
-#channel_img_8 {
-	position: absolute;
-	top: 400px;
-	left: 1055px;
 }
 .bottomBarTV
 {
@@ -278,10 +177,22 @@ body
 	left: 80px;
 	z-index: 10005;
 }
+.channels_left_arrow_shadow {
+	position: absolute;
+	top: 460px;
+	left: 65px;
+	z-index: 10005;
+}
 .channels_right_arrow {
 	position: absolute;
 	top: 330px;
 	right: 80px;
+	z-index: 10005;
+}
+.channels_right_arrow_shadow {
+	position: absolute;
+	top: 460px;
+	right: 60px;
 	z-index: 10005;
 }
 

@@ -2,38 +2,178 @@ function SceneTVchannels() {
 };
 
 
+//----------------------------------------------------------------------
+//Channels categories
+//----------------------------------------------------------------------
 SceneTVchannels.topPositionsA = [0, 80, 160, 240, 320, 400];
-//SceneTVchannels.positionColorsA = ["#5c4541", "#f8f7f6", "#fbfafa", "#c8bdb5", "#684f43", "#462512"];
 SceneTVchannels.positionColorsA = ["#5c4541", "#c8bdb5", "#fbfafa", "#c8bdb5", "#684f43", "#462512"];
-SceneTVchannels.elementsPositionA = [0, 1, 2, 3, 4, 5];
-SceneTVchannels.listElements = null;
+//positions of xml channels' categories items on the screen (will be changing when clicking arrows)
+SceneTVchannels.elementsPositionA = [];
+//links to div elements that represent channels' categories
+SceneTVchannels.listElements = [];
+//Array with categories' ids (we will need that for getting the channels with certain category id
+SceneTVchannels.listElementsIds = [];
+
 SceneTVchannels.activeMarkTopPositionsA = [93, 173, 253];
+//The active channels' categories mark index (3 possible options,
+//but only one enabled - the mark doesn't move, the entire list does)
 SceneTVchannels.currentActiveMarkTopIndex = 1;
+//Index of current active category (it will always be the same, as the elementsPositionsA array changes) 
+SceneTVchannels.currentCategoryIndex = 2;
+
+//----------------------------------------------------------------------
+//Actual channels
+//----------------------------------------------------------------------
+SceneTVchannels.topPositionsChn = [0, 400, 0, 400, 0, 400, 0, 400];
+SceneTVchannels.leftPositionsChn = [-145, -145, 255, 255, 655, 655, 1055, 1055];
+//positions of xml channels items on the screen (will be changing when clicking arrows)
+SceneTVchannels.elementsPositionChn = [0, 1, 2, 3, 4, 5, 6, 7];
+//links to div elements that represent channels
+SceneTVchannels.listElementsChn = [];
+SceneTVchannels.channelsCnt = 0;
+SceneTVchannels.currentActiveChannelIndex = 2;
 
 SceneTVchannels.focusElements = [["back", "tv_focusElement_1"],
                              ["media", "tv_focusElement_2"],
-                             ["musik", "tv_focusElement_3"]];
-SceneTVchannels.currentFocusElementId = 0;
+                             ["musik", "tv_focusElement_3"],
+                             ["categories", "tv_focusElement_4"],
+                             ["carousel", "tv_focusElement_5", "tv_focusElement_6"]
+                             ];
+SceneTVchannels.currentFocusElementId = 4;
 
 
 SceneTVchannels.prototype.initialize = function () {
     alert("SceneTVchannels.initialize()");    
     
-    SceneTVchannels.listElements = [$("#channel_1"), $("#channel_2"), $("#channel_3"), 
-           	                     $("#channel_4"), $("#channel_5"), $("#channel_6")];
+    SceneTVchannels.loadCategories("XML/Channels_categories.xml");
     
     SceneTVchannels.updateFocusElements();
     
     SceneTVchannels.updateTextFields();
+};
 
-    //Basic inits for the elements positions
+//We init channels' categories list after it's loaded from xml, show/hide needed elements
+SceneTVchannels.doCategoriesInit = function() {
+    //SceneTVchannels.listElements = [];
+
+    if (SceneTVchannels.listElements.length == 4)
+    {
+    	SceneTVchannels.elementsPositionA = [0, 1, 2, 3];
+    	$("#channel_line_4").hide();
+    	$("#channel_line_5").hide();
+    	
+    } else if (SceneTVchannels.listElements.length == 5) {
+    	SceneTVchannels.elementsPositionA = [0, 1, 2, 3, 4];
+    	$("#channel_line_5").hide();
+    } else {
+    	SceneTVchannels.elementsPositionA = [0, 1, 2, 3, 4, 5];
+    }
+    
+    
+    //Basic inits for the channels' categories positions
    	for (var i = 0; i < SceneTVchannels.listElements.length; i++)
    	{
-   		SceneTVchannels.listElements[i].css({top: SceneTVchannels.topPositionsA[SceneTVchannels.elementsPositionA[i]], 
+   		if (i < SceneTVchannels.elementsPositionA.length)
+   		{
+   			SceneTVchannels.listElements[i].show().css({top: SceneTVchannels.topPositionsA[SceneTVchannels.elementsPositionA[i]], 
    								  color: SceneTVchannels.positionColorsA[SceneTVchannels.elementsPositionA[i]]});
+   		} else {
+   			SceneTVchannels.listElements[i].hide().css({top : -100});
+   		}
    	}
 
    	$("#active_channel").css({top: SceneTVchannels.activeMarkTopPositionsA[SceneTVchannels.currentActiveMarkTopIndex]});
+
+   	//Now when the categories are loaded and displayed, let load the channels
+   	SceneTVchannels.loadChannels("XML/Channels.xml");
+};
+
+SceneTVchannels.loadCategories = function(xmlURL) {
+    $.ajax({
+        type: "get",
+        dataType: "xml",
+        url: xmlURL,
+        success: function(xml){
+            if($(xml).find("tv_category").length > 0){
+            	i = 0;
+                $(xml).find("tv_category").each(function(i){ // loop
+                	i++;
+                	var id = $(this).attr("id");
+                	
+                	$(".channelList").append('<div class="tvListItem" id="channel_category_'+i+'">'+
+                			Languages[id][AppData.language] +'</div>');
+                	
+                	SceneTVchannels.listElementsIds.push(id);
+                	
+                	SceneTVchannels.listElements.push($("#channel_category_"+i));   	
+                });
+            }
+            SceneTVchannels.doCategoriesInit();
+        },
+        error: function(){
+            alert("xml error!!");
+        }
+    });
+};
+
+SceneTVchannels.loadChannels = function(xmlURL) {
+    $.ajax({
+        type: "get",
+        dataType: "xml",
+        url: xmlURL,
+        success: function(xml){
+            if($(xml).find("tv_channel").length > 0){
+            	i = 0;
+                $(xml).find("tv_channel").each(function(i){ // loop
+                	//alert(SceneTVchannels.listElementsIds[SceneTVchannels.elementsPositionA[SceneTVchannels.currentCategoryIndex]]);
+                	if ($(this).attr("catId") == 
+                		SceneTVchannels.listElementsIds[SceneTVchannels.elementsPositionA[SceneTVchannels.currentCategoryIndex]])
+                	{
+	                	i++;
+	                	var id = $(this).attr("id");
+	                	var imgSrc = $(this).attr("imgSrc");
+	                	
+	                	$(".channelsImageList").append(
+	                			'<div class="channel_img" id="channel_img_'+i+'">' +
+							'<div class="channel_img_inner">' +
+								'<img src="images/channel_bg.png" width="390" height="390" class="channel_img_bg" />' +
+								'<img src="'+ imgSrc +'" class="channel_img_pic" width="337" height="337"/>' +
+								'<img src="images/tv_channels_mask.png" class="channel_img_mask" width="337" height="83"/>' +
+								'<div class="channel_img_text">'+ Languages[id][AppData.language] + '</div>' +
+							'</div>' +
+						'</div>');
+	                	
+	                	SceneTVchannels.listElementsChn.push($("#channel_img_"+i));
+                	}
+                });
+            }
+            
+            SceneTVchannels.doChannelsInit();
+        },
+        error: function(){
+            alert("xml error!!");
+        }
+    });
+};
+
+//We init channels list, show/hide needed elements
+SceneTVchannels.doChannelsInit = function() {
+    //SceneTVchannels.listElementsChn = [];
+
+    SceneTVchannels.channelsCnt = SceneTVchannels.listElementsChn.length;
+    
+    //Basic inits for the channels positions
+   	for (var i = 0; i < SceneTVchannels.listElementsChn.length; i++)
+   	{
+   		if (i < SceneTVchannels.elementsPositionChn.length)
+   		{
+   			SceneTVchannels.listElementsChn[i].show().css({top: SceneTVchannels.topPositionsChn[SceneTVchannels.elementsPositionChn[i]], 
+   								left: SceneTVchannels.leftPositionsChn[SceneTVchannels.elementsPositionChn[i]]});
+   		} else {
+   			SceneTVchannels.listElementsChn[i].hide();
+   		}
+   	}
+
 };
 
 SceneTVchannels.updateTextFields = function() {
@@ -56,7 +196,6 @@ SceneTVchannels.updateFocusElements = function() {
     		if (SceneTVchannels.focusElements[i][2])
     		{
     			$("#"+SceneTVchannels.focusElements[i][2]).show();
-    			SceneTVchannels.stopRotatingCarousel();
     		}
     	} else {
     		$("#"+SceneTVchannels.focusElements[i][1]).hide();
@@ -69,6 +208,60 @@ SceneTVchannels.updateFocusElements = function() {
     }
 };
 
+SceneTVchannels.moveChannelsLeft = function() {
+	SceneTVchannels.moveChannels(-1);
+};
+
+SceneTVchannels.moveChannelsRight = function() {
+	SceneTVchannels.moveChannels(1);
+};
+
+SceneTVchannels.moveChannels = function(val) {
+	
+	for (var i = 0; i < SceneTVchannels.elementsPositionChn.length; i++)
+	{
+		SceneTVchannels.elementsPositionChn[i] += 2 * val;
+		
+		if (SceneTVchannels.elementsPositionChn[i] >= SceneTVchannels.listElementsChn.length)
+		{
+			SceneTVchannels.elementsPositionChn[i] -= SceneTVchannels.listElementsChn.length;
+		}
+		
+		if (SceneTVchannels.elementsPositionChn[i] < 0)
+			SceneTVchannels.elementsPositionChn[i] += SceneTVchannels.listElementsChn.length;
+	}
+
+	SceneTVchannels.moveAndUpdateChannels(val);
+};
+
+SceneTVchannels.moveAndUpdateChannels = function (val) {
+	alert(SceneTVchannels.elementsPositionChn);
+	for (var i = 0; i < SceneTVchannels.listElementsChn.length; i++)
+	{
+		if ($.inArray(i, SceneTVchannels.elementsPositionChn) == -1)
+		{
+			SceneTVchannels.listElementsChn[i].hide();
+		} else {
+			if ( val < 0 && (SceneTVchannels.elementsPositionChn.indexOf(i) == 0 || 
+					SceneTVchannels.elementsPositionChn.indexOf(i) == 1) || (val > 0 && 
+							(SceneTVchannels.elementsPositionChn.indexOf(i) == SceneTVchannels.elementsPositionChn.length - 2 || 
+					SceneTVchannels.elementsPositionChn.indexOf(i) == SceneTVchannels.elementsPositionChn.length - 1)) )
+			{
+				SceneTVchannels.listElementsChn[i].show().css({
+					left : SceneTVchannels.leftPositionsChn[SceneTVchannels.elementsPositionChn.indexOf(i)],
+					top : SceneTVchannels.topPositionsChn[SceneTVchannels.elementsPositionChn.indexOf(i)]});
+				alert(i);
+			} else {
+				SceneTVchannels.listElementsChn[i].show().animate({
+					"left" : SceneTVchannels.leftPositionsChn[SceneTVchannels.elementsPositionChn.indexOf(i)],
+					"top" : SceneTVchannels.topPositionsChn[SceneTVchannels.elementsPositionChn.indexOf(i)]}, 
+					"slow", 
+					function() {}
+				);
+			}
+		}	
+	}
+};
 
 
 SceneTVchannels.moveListUp = function() {
@@ -83,7 +276,7 @@ SceneTVchannels.moveListDown = function() {
 };
 
 SceneTVchannels.moveList = function(val) {
-	for (var i = 0; i < SceneTVchannels.listElements.length; i++)
+	for (var i = 0; i < SceneTVchannels.elementsPositionA.length; i++)
 	{
 		SceneTVchannels.elementsPositionA[i] += val;
 		
@@ -103,7 +296,7 @@ SceneTVchannels.getColorByContent = function (content) {
 	{
 		if (SceneTVchannels.listElements[i].attr("id") == $(content).attr("id"))
 		{
-			return SceneTVchannels.positionColorsA[SceneTVchannels.elementsPositionA[i]];
+			return SceneTVchannels.positionColorsA[SceneTVchannels.elementsPositionA.indexOf(i)];
 		}
 	}	
 };
@@ -111,14 +304,19 @@ SceneTVchannels.getColorByContent = function (content) {
 SceneTVchannels.moveAndUpdateList = function () {
 	for (var i = 0; i < SceneTVchannels.listElements.length; i++)
 	{
-		SceneTVchannels.listElements[i].animate({
-			"top" : SceneTVchannels.topPositionsA[SceneTVchannels.elementsPositionA[i]]}, 
-			"fast", 
-			function() {
-				
-				$(this).css({color:  SceneTVchannels.getColorByContent(this)}); 
-			}
-		);
+		if ($.inArray(i, SceneTVchannels.elementsPositionA) == -1)
+		{
+			SceneTVchannels.listElements[i].hide().css({top : -100});
+		} else {
+			SceneTVchannels.listElements[i].show().animate({
+				"top" : SceneTVchannels.topPositionsA[SceneTVchannels.elementsPositionA.indexOf(i)]}, 
+				"fast", 
+				function() {
+					
+					$(this).css({color:  SceneTVchannels.getColorByContent(this)}); 
+				}
+			);	
+		}			
 	}	
 };
 
@@ -127,7 +325,11 @@ SceneTVchannels.prototype.keyLeftPress = function() {
 	if (focusedId <= 2)
 	{
 		focusedId = focusedId == 0 ? 2 : focusedId - 1;
+	} else if (focusedId <= 3) {
+		SceneTVchannels.moveListDown();
 	} else {
+		//move carousel left
+		SceneTVchannels.moveChannelsLeft();
 	}
 	SceneTVchannels.currentFocusElementId = focusedId;
 	SceneTVchannels.updateFocusElements();	
@@ -137,16 +339,41 @@ SceneTVchannels.prototype.keyRightPress = function() {
 	if (focusedId <= 2)
 	{
 		focusedId = focusedId == 2 ? 0 : focusedId + 1;
+	} else if (focusedId <= 3) {
+		SceneTVchannels.moveListUp();
 	} else {
-	}	
+		//move carousel right
+		SceneTVchannels.moveChannelsRight();
+	}
 	SceneTVchannels.currentFocusElementId = focusedId;
 	SceneTVchannels.updateFocusElements();
 };
 SceneTVchannels.prototype.keyUpPress = function() {
-	SceneTVchannels.moveListUp();
+	var focusedId = SceneTVchannels.currentFocusElementId;
+	if (focusedId <= 2)
+	{
+		focusedId = 4;
+	} else if (focusedId <= 3) {
+		focusedId = 0;
+	} else {
+		focusedId = 3;
+	}
+	SceneTVchannels.currentFocusElementId = focusedId;
+	SceneTVchannels.updateFocusElements();	
+
 };
 SceneTVchannels.prototype.keyDownPress = function() {
-	SceneTVchannels.moveListDown();
+	var focusedId = SceneTVchannels.currentFocusElementId;
+	if (focusedId <= 2)
+	{
+		focusedId = 3;
+	} else if (focusedId <= 3) {
+		focusedId = 4;
+	} else {
+		focusedId = 0;
+	}
+	SceneTVchannels.currentFocusElementId = focusedId;
+	SceneTVchannels.updateFocusElements();
 };
 SceneTVchannels.prototype.keyEnterPress = function() {
 	
