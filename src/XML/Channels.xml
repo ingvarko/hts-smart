@@ -10,4 +10,11 @@
 	<tv_channel id="ch_hockey" catId="tv_sport" imgSrc="images/channels/hockey.jpg"/>
 	<tv_channel id="ch_news2" catId="tv_sport" imgSrc="images/channels/news2.jpg"/>
 	<tv_channel id="ch_two_touch_pass" catId="tv_sport" imgSrc="images/channels/two_touch_pass.jpg"/>
+	
+	<tv_channel id="ch_two_touch_pass" catId="tv_movies" imgSrc="images/channels/two_touch_pass.jpg"/>
+	<tv_channel id="ch_chelsea_tv" catId="tv_movies" imgSrc="images/channels/chelsea_tv.png"/>
+	<tv_channel id="ch_football" catId="tv_movies" imgSrc="images/channels/football.jpg"/>
+	<tv_channel id="ch_hockey" catId="tv_movies" imgSrc="images/channels/hockey.jpg"/>
+	<tv_channel id="ch_news2" catId="tv_movies" imgSrc="images/channels/news2.jpg"/>
+	<tv_channel id="ch_two_touch_pass" catId="tv_movies" imgSrc="images/channels/two_touch_pass.jpg"/>
 </tv_channels>

@@ -28,9 +28,13 @@ SceneTVchannels.topPositionsChn = [0, 400, 0, 400, 0, 400, 0, 400];
 SceneTVchannels.leftPositionsChn = [-145, -145, 255, 255, 655, 655, 1055, 1055];
 //positions of xml channels items on the screen (will be changing when clicking arrows)
 SceneTVchannels.elementsPositionChn = [0, 1, 2, 3, 4, 5, 6, 7];
+//Images sources for channels' backgrounds (normal and active)
+SceneTVchannels.channelsBgImSrc = ["images/channel_bg.png", "images/active_channel_bg.png"];
 //links to div elements that represent channels
 SceneTVchannels.listElementsChn = [];
 SceneTVchannels.channelsCnt = 0;
+//Here we will save the info about channels
+SceneTVchannels.channelsData = [];
 SceneTVchannels.currentActiveChannelIndex = 2;
 
 SceneTVchannels.focusElements = [["back", "tv_focusElement_1"],
@@ -85,7 +89,7 @@ SceneTVchannels.doCategoriesInit = function() {
    	$("#active_channel").css({top: SceneTVchannels.activeMarkTopPositionsA[SceneTVchannels.currentActiveMarkTopIndex]});
 
    	//Now when the categories are loaded and displayed, let load the channels
-   	SceneTVchannels.loadChannels("XML/Channels.xml");
+   	SceneTVchannels.loadChannels();
 };
 
 SceneTVchannels.loadCategories = function(xmlURL) {
@@ -116,11 +120,15 @@ SceneTVchannels.loadCategories = function(xmlURL) {
     });
 };
 
-SceneTVchannels.loadChannels = function(xmlURL) {
+SceneTVchannels.loadChannels = function() {
+	$(".channel_img").remove();
+	SceneTVchannels.listElementsChn = [];
+	SceneTVchannels.channelsData = [];
+	
     $.ajax({
         type: "get",
         dataType: "xml",
-        url: xmlURL,
+        url: "XML/Channels.xml",
         success: function(xml){
             if($(xml).find("tv_channel").length > 0){
             	i = 0;
@@ -133,19 +141,46 @@ SceneTVchannels.loadChannels = function(xmlURL) {
 	                	var id = $(this).attr("id");
 	                	var imgSrc = $(this).attr("imgSrc");
 	                	
-	                	$(".channelsImageList").append(
-	                			'<div class="channel_img" id="channel_img_'+i+'">' +
-							'<div class="channel_img_inner">' +
-								'<img src="images/channel_bg.png" width="390" height="390" class="channel_img_bg" />' +
-								'<img src="'+ imgSrc +'" class="channel_img_pic" width="337" height="337"/>' +
-								'<img src="images/tv_channels_mask.png" class="channel_img_mask" width="337" height="83"/>' +
-								'<div class="channel_img_text">'+ Languages[id][AppData.language] + '</div>' +
-							'</div>' +
-						'</div>');
-	                	
-	                	SceneTVchannels.listElementsChn.push($("#channel_img_"+i));
+	                	SceneTVchannels.channelsData.push([id, imgSrc]);
                 	}
                 });
+                
+                i = SceneTVchannels.channelsData.length;
+                
+                if (i < 4) {
+                	return;
+                } else if (i == 4) {
+                	SceneTVchannels.channelsData.push(SceneTVchannels.channelsData[0],
+                			SceneTVchannels.channelsData[1],
+                			SceneTVchannels.channelsData[2],
+                			SceneTVchannels.channelsData[3]);
+                } else if (i == 5) {
+                	SceneTVchannels.channelsData.push(SceneTVchannels.channelsData[1],
+							  SceneTVchannels.channelsData[2],
+							  SceneTVchannels.channelsData[3]);                	
+                } else if (i == 6) {
+                	SceneTVchannels.channelsData.push(SceneTVchannels.channelsData[2],
+							  SceneTVchannels.channelsData[3]);                	
+                } else if (i == 7) {
+                	SceneTVchannels.channelsData.push(SceneTVchannels.channelsData[2]);
+                }
+                
+	                	
+                for (var i = 0; i < SceneTVchannels.channelsData.length; i++)
+                {
+                	$(".channelsImageList").append(
+                			'<div class="channel_img" id="channel_img_'+i+'">' +
+						'<div class="channel_img_inner">' +
+							'<img src="images/channel_bg.png" width="390" height="390" class="channel_img_bg" />' +
+							'<img src="'+ SceneTVchannels.channelsData[i][1] +'" class="channel_img_pic" width="337" height="337"/>' +
+							'<img src="images/tv_channels_mask.png" class="channel_img_mask" width="337" height="83"/>' +
+							'<div class="channel_img_text">'+ Languages[SceneTVchannels.channelsData[i][0]][AppData.language] + '</div>' +
+						'</div>' +
+					'</div>');
+                	
+                	SceneTVchannels.listElementsChn.push($("#channel_img_"+i));
+            	}
+                
             }
             
             SceneTVchannels.doChannelsInit();
@@ -173,6 +208,9 @@ SceneTVchannels.doChannelsInit = function() {
    			SceneTVchannels.listElementsChn[i].hide();
    		}
    	}
+   	
+   	var activeElementIndex = SceneTVchannels.elementsPositionChn[SceneTVchannels.currentActiveChannelIndex];
+   	SceneTVchannels.listElementsChn[activeElementIndex].find(".channel_img_bg").attr("src", SceneTVchannels.channelsBgImSrc[1]);
 
 };
 
@@ -209,15 +247,36 @@ SceneTVchannels.updateFocusElements = function() {
 };
 
 SceneTVchannels.moveChannelsLeft = function() {
-	SceneTVchannels.moveChannels(-1);
+	
+	if (SceneTVchannels.currentActiveChannelIndex != 2)
+	{
+		SceneTVchannels.currentActiveChannelIndex--;
+	} else {
+		SceneTVchannels.currentActiveChannelIndex++;
+		SceneTVchannels.moveChannels(-1);
+	}
+	
+	SceneTVchannels.updateActiveChannelMark();
 };
 
 SceneTVchannels.moveChannelsRight = function() {
-	SceneTVchannels.moveChannels(1);
+	
+	if (SceneTVchannels.currentActiveChannelIndex != 5)
+	{
+		SceneTVchannels.currentActiveChannelIndex++;
+	} else {
+		SceneTVchannels.currentActiveChannelIndex--;
+		SceneTVchannels.moveChannels(1);
+	}
+	
+	SceneTVchannels.updateActiveChannelMark();
+	
 };
 
 SceneTVchannels.moveChannels = function(val) {
-	
+	if (SceneTVchannels.channelsCnt <= 4)
+		return;
+		
 	for (var i = 0; i < SceneTVchannels.elementsPositionChn.length; i++)
 	{
 		SceneTVchannels.elementsPositionChn[i] += 2 * val;
@@ -235,7 +294,6 @@ SceneTVchannels.moveChannels = function(val) {
 };
 
 SceneTVchannels.moveAndUpdateChannels = function (val) {
-	alert(SceneTVchannels.elementsPositionChn);
 	for (var i = 0; i < SceneTVchannels.listElementsChn.length; i++)
 	{
 		if ($.inArray(i, SceneTVchannels.elementsPositionChn) == -1)
@@ -250,7 +308,6 @@ SceneTVchannels.moveAndUpdateChannels = function (val) {
 				SceneTVchannels.listElementsChn[i].show().css({
 					left : SceneTVchannels.leftPositionsChn[SceneTVchannels.elementsPositionChn.indexOf(i)],
 					top : SceneTVchannels.topPositionsChn[SceneTVchannels.elementsPositionChn.indexOf(i)]});
-				alert(i);
 			} else {
 				SceneTVchannels.listElementsChn[i].show().animate({
 					"left" : SceneTVchannels.leftPositionsChn[SceneTVchannels.elementsPositionChn.indexOf(i)],
@@ -263,6 +320,16 @@ SceneTVchannels.moveAndUpdateChannels = function (val) {
 	}
 };
 
+SceneTVchannels.updateActiveChannelMark = function() {
+
+	for (var i = 0; i < SceneTVchannels.listElementsChn.length; i++)
+	{
+		SceneTVchannels.listElementsChn[i].find(".channel_img_bg").attr("src", SceneTVchannels.channelsBgImSrc[0]);
+	}
+	
+	var activeElementIndex = SceneTVchannels.elementsPositionChn[SceneTVchannels.currentActiveChannelIndex];
+   	SceneTVchannels.listElementsChn[activeElementIndex].find(".channel_img_bg").attr("src", SceneTVchannels.channelsBgImSrc[1]);
+};
 
 SceneTVchannels.moveListUp = function() {
 	
@@ -327,6 +394,8 @@ SceneTVchannels.prototype.keyLeftPress = function() {
 		focusedId = focusedId == 0 ? 2 : focusedId - 1;
 	} else if (focusedId <= 3) {
 		SceneTVchannels.moveListDown();
+		
+		SceneTVchannels.loadChannels();
 	} else {
 		//move carousel left
 		SceneTVchannels.moveChannelsLeft();
@@ -341,6 +410,8 @@ SceneTVchannels.prototype.keyRightPress = function() {
 		focusedId = focusedId == 2 ? 0 : focusedId + 1;
 	} else if (focusedId <= 3) {
 		SceneTVchannels.moveListUp();
+		
+		SceneTVchannels.loadChannels();
 	} else {
 		//move carousel right
 		SceneTVchannels.moveChannelsRight();
