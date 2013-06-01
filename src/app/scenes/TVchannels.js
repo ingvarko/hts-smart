@@ -1,6 +1,9 @@
 function SceneTVchannels() {
 };
 
+//VideoPlayer
+SceneTVchannels.isVideoPlaying = false;
+SceneTVchannels.isVideoOnPause = false;
 
 //----------------------------------------------------------------------
 //Channels categories
@@ -121,6 +124,7 @@ SceneTVchannels.loadCategories = function(xmlURL) {
 };
 
 SceneTVchannels.loadChannels = function() {
+	//$(".loaderImg").show();
 	$(".channel_img").remove();
 	SceneTVchannels.listElementsChn = [];
 	SceneTVchannels.channelsData = [];
@@ -133,15 +137,16 @@ SceneTVchannels.loadChannels = function() {
             if($(xml).find("tv_channel").length > 0){
             	i = 0;
                 $(xml).find("tv_channel").each(function(i){ // loop
-                	//alert(SceneTVchannels.listElementsIds[SceneTVchannels.elementsPositionA[SceneTVchannels.currentCategoryIndex]]);
                 	if ($(this).attr("catId") == 
                 		SceneTVchannels.listElementsIds[SceneTVchannels.elementsPositionA[SceneTVchannels.currentCategoryIndex]])
                 	{
 	                	i++;
 	                	var id = $(this).attr("id");
 	                	var imgSrc = $(this).attr("imgSrc");
+	                	var type = $(this).attr("type");
+	                	var url = $(this).attr("url");
 	                	
-	                	SceneTVchannels.channelsData.push([id, imgSrc]);
+	                	SceneTVchannels.channelsData.push([id, imgSrc, type, url]);
                 	}
                 });
                 
@@ -183,10 +188,14 @@ SceneTVchannels.loadChannels = function() {
                 
             }
             
+            $(".loaderImg").hide();
+            
             SceneTVchannels.doChannelsInit();
+            
         },
         error: function(){
             alert("xml error!!");
+            $(".loaderImg").hide();
         }
     });
 };
@@ -213,6 +222,94 @@ SceneTVchannels.doChannelsInit = function() {
    	SceneTVchannels.listElementsChn[activeElementIndex].find(".channel_img_bg").attr("src", SceneTVchannels.channelsBgImSrc[1]);
 
 };
+
+//Play/Pause video
+SceneTVchannels.playPauseVideo = function() {
+	if (SceneTVchannels.isVideoPlaying)
+	{
+		if (SceneTVchannels.isVideoOnPause)
+		{
+			sf.service.VideoPlayer.resume();
+			SceneTVchannels.isVideoOnPause = false;
+		} else {
+			sf.service.VideoPlayer.pause();
+			SceneTVchannels.isVideoOnPause = true;
+		}
+	}
+};
+
+//Stop playing video (custom stop or the video ended).
+SceneTVchannels.stopVideo = function() {
+	if (SceneTVchannels.isVideoPlaying)
+	{
+		SceneTVchannels.isVideoPlaying = false;
+	
+		sf.service.VideoPlayer.stop();
+	
+		sf.service.VideoPlayer.hide();
+	}
+	
+	//video is over, we can continue playing bg music
+	var player = document.getElementById("flvplayer");
+	if (player)
+		$(player).show();
+};
+
+//User clicked Enter on the movie - no way out, let's play it :)
+SceneTVchannels.playVideo = function() {
+	
+	//first we have to stop playing bg music
+	var player = document.getElementById("flvplayer");
+	if (player)
+		$(player).hide();
+	
+	SceneTVchannels.isVideoPlaying = true;
+	
+	sf.service.VideoPlayer.setZIndex(100005);
+	
+	sf.service.VideoPlayer.init({
+	    onend: function(){
+	        alert('Video ended.');
+	        SceneTVchannels.stopVideo();
+	    },
+	    onerror: function (error) {
+	        alert('Error : ' + error);
+	        SceneTVchannels.stopVideo();
+	    }
+	});
+	
+	sf.service.VideoPlayer.setPosition({
+	    left: 0,
+	    top: 0,
+	    width: 1920,
+	    height: 1080
+	});
+	
+	//TODO:Sets Player as fullscreen mode - do that when testing on real device
+	//sf.service.VideoPlayer.setFullScreen(true);
+
+	
+	var activeIndex = SceneTVchannels.elementsPositionChn[SceneTVchannels.currentActiveChannelIndex];
+	
+	var url = null;
+	//SceneTVchannels.moviesInfo[]
+	if (SceneTVchannels.channelsData[activeIndex][2] == "local")
+	{
+	    url = getAbsPath(SceneTVchannels.channelsData[activeIndex][3]);
+	} else if (SceneTVchannels.channelsData[activeIndex][2] == "url") {
+	    url = SceneTVchannels.channelsData[activeIndex][3];
+	}
+
+	if (url)
+	{
+		// starts playback
+		sf.service.VideoPlayer.play({
+		    url: url,
+		    fullScreen: false
+		});
+	}
+};
+
 
 SceneTVchannels.updateTextFields = function() {
 	var d = new Date();
@@ -447,13 +544,18 @@ SceneTVchannels.prototype.keyDownPress = function() {
 	SceneTVchannels.updateFocusElements();
 };
 SceneTVchannels.prototype.keyEnterPress = function() {
-	
+	if (SceneTVchannels.isVideoPlaying)
+	{
+		SceneTVchannels.stopVideo();
+		return;
+	}
+
 	switch (SceneTVchannels.currentFocusElementId)
 	{
 		case 0:
 			//go back
-			AppData.previousScreen = 'TVchannels';
 			Controller.changeScene(AppData.previousScreen);
+			AppData.previousScreen = 'TVchannels';
 			break;
 		case 1:
 			//goto Media channels screen
@@ -463,9 +565,9 @@ SceneTVchannels.prototype.keyEnterPress = function() {
 		case 2:
 			//goto Musik screen
 			break;
-		case 3:
+		case 4:
 			//Carousel - select video to play
-			//AppData.selectedItem = SceneTVchannels.movieTypesInfo[SceneTVchannels.carousel.currentLayer - 1];
+			SceneTVchannels.playVideo();
 			//play video
 			break;
 	}
@@ -474,9 +576,20 @@ SceneTVchannels.prototype.keyHomePress = function() {
 	Controller.changeScene('MainMenu');
 };
 SceneTVchannels.prototype.keyBackPress = function() {
+	SceneTVchannels.stopVideo();
 	//go back
-	AppData.previousScreen = 'TVchannels';
 	Controller.changeScene(AppData.previousScreen);
+	AppData.previousScreen = 'TVchannels';
+};
+SceneTVchannels.prototype.keyPausePress = function() {
+	//exit playing the video
+	
+	if (SceneTVchannels.isVideoPlaying)
+	{
+		SceneTVchannels.playPauseVideo();
+		return;
+	}
+
 };
 
 
@@ -504,6 +617,9 @@ SceneTVchannels.prototype.handleKeyDown = function (keyCode) {
 	    case sf.key.HOME:
 	    	this.keyHomePress();
 	    	break;
+	    case sf.key.PAUSE:
+	    	this.keyPausePress();
+	    	break;
     }
 };
 
@@ -517,6 +633,10 @@ SceneTVchannels.prototype.handleHide = function () {
 
 SceneTVchannels.prototype.handleFocus = function () {
     alert("SceneTVchannels.handleFocus()");
+    
+    if (SceneTVchannels.listElements)
+    	$(".loaderImg").hide();
+    
 };
 
 SceneTVchannels.prototype.handleBlur = function () {

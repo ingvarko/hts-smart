@@ -9,7 +9,7 @@ SceneMovieTypes.focusElements = [["back", "movietypes_focusElement_1"],
                                ["carousel", "movietypes_focusElement_4", "movietypes_focusElement_5"]];
 SceneMovieTypes.movieTypesInfo = [];
 
-SceneMovieTypes.currentFocusElementId = 0;
+SceneMovieTypes.currentFocusElementId = 3;
 
 
 SceneMovieTypes.prototype.initialize = function () {
@@ -118,14 +118,16 @@ SceneMovieTypes.launchCarousel = function() {
     	  x: 400
       },
       autoRotation: {
-    	  enabled: false
+    	  enabled: false,
+    	  delay: Constants.carouselInterval
       }
+    }, function() {
+    	$(".loaderImg").hide();
     });
 
 	SceneMovieTypes.startRotatingCarousel();
 	SceneMovieTypes.updateText();
 	
-	$(".loaderImg").hide();
 };
 
 SceneMovieTypes.ParseXML = function (xmlURL) {
@@ -212,8 +214,8 @@ SceneMovieTypes.prototype.keyEnterPress = function() {
 	{
 		case 0:
 			//go back
-			AppData.previousScreen = 'MovieTypes';
 			Controller.changeScene(AppData.previousScreen);
+			AppData.previousScreen = 'MovieTypes';
 			break;
 		case 1:
 			//goto TV channels screen
@@ -237,8 +239,8 @@ SceneMovieTypes.prototype.keyHomePress = function() {
 };
 SceneMovieTypes.prototype.keyBackPress = function() {
 	//go back
-	AppData.previousScreen = 'MovieTypes';
 	Controller.changeScene(AppData.previousScreen);
+	AppData.previousScreen = 'MovieTypes';
 };
 
 
@@ -279,6 +281,9 @@ SceneMovieTypes.prototype.handleHide = function () {
 
 SceneMovieTypes.prototype.handleFocus = function () {
     alert("SceneMovieTypes.handleFocus()");
+    
+    if (SceneMovieTypes.carousel)
+    	$(".loaderImg").hide();
 };
 
 SceneMovieTypes.prototype.handleBlur = function () {

@@ -1,6 +1,8 @@
 function SceneMainMenu() {
 };
 
+//This variable will control no activity and redirecting to main menu
+SceneMainMenu.activityHandler = null;
 SceneMainMenu.isLangMenuShown = false;
 SceneMainMenu.currentLangSelector = null;
 SceneMainMenu.carousel = null;
@@ -26,11 +28,19 @@ SceneMainMenu.prototype.initialize = function () {
     SceneMainMenu.updateTextFields();
 };
 
+SceneMainMenu.setActivityControl = function() {
+	clearTimeout(SceneMainMenu.activityHandler);
+	
+	SceneMainMenu.activityHandler = setTimeout(function() {
+		Controller.changeScene('HomePage');
+	}, Constants.noActivityTime);
+};
+
 SceneMainMenu.updateTextFields = function() {
 	var d = new Date();
 	var n = d.getMonth();
 	
-	$("#language_text_label").text(Languages["langTexts"][AppData.language]);
+	$("#language_text_label_mainmenu").text(Languages["langTexts"][AppData.language]);
 	$("#month_name_mainmenu").text(Languages["month"][n-1][AppData.language]);
 	$("#check_out_services").text(Languages["check_out_services"][AppData.language]);
 };
@@ -50,7 +60,7 @@ SceneMainMenu.rotateCarousel = function() {
 };
 
 SceneMainMenu.startRotatingCarousel = function() {
-	if (SceneMainMenu.currentFocusElementId == 3)
+	if (SceneMainMenu.currentFocusElementId == 7)
 		return;
 
 	SceneMainMenu.isRotatingCarousel = true;
@@ -111,13 +121,14 @@ SceneMainMenu.launchCarousel = function() {
     	  x: 400
       },
       autoRotation: {
-    	  enabled: false
+    	  enabled: false,
+    	  delay: Constants.carouselInterval
       }
+    }, function() {
+    	$(".loaderImg").hide();
     });
 
 	SceneMainMenu.startRotatingCarousel();
-	
-	$(".loaderImg").hide();
 };
 
 SceneMainMenu.ParseXML = function (xmlURL) {
@@ -170,12 +181,23 @@ SceneMainMenu.setLanguage = function() {
 	{
 		AppData.language = SceneMainMenu.currentLangSelector; 
 		SceneMainMenu.updateTextFields();
+		
+		SceneMainMenu.saveLanguage();
 	}
 	
 	SceneMainMenu.hideLanguageMenu();
 };
 
+//We write language value to Saves.data file (sort of cookies) 
+SceneMainMenu.saveLanguage = function() {
+	var fs = new FileSystem();
+	var keyFile = fs.openCommonFile('Saves.data', 'w');
+	keyFile.writeAll("lang:" + AppData.language);
+    fs.closeCommonFile(keyFile);
+};
+
 SceneMainMenu.prototype.keyLeftPress = function() {
+	
 	if (SceneMainMenu.isLangMenuShown)
 	{
 		return;
@@ -226,21 +248,19 @@ SceneMainMenu.prototype.keyUpPress = function() {
 		return;
 	}
 	
-	var focusedId = SceneMainMenu.currentFocusElementId;
-	if (focusedId <= 2)
+	if (SceneMainMenu.currentFocusElementId <= 2)
 	{
 		//Carousel
-		focusedId = 7;
+		SceneMainMenu.currentFocusElementId = 7;
 		SceneMainMenu.stopRotatingCarousel();
-	} else if (focusedId <= 6) {
+	} else if (SceneMainMenu.currentFocusElementId <= 6) {
 		//Top menu
-		focusedId = 0;
+		SceneMainMenu.currentFocusElementId = 0;
 	} else {
 		//Middle menu
-		focusedId = 3;
+		SceneMainMenu.currentFocusElementId = 3;
 		SceneMainMenu.startRotatingCarousel();
-	}	
-	SceneMainMenu.currentFocusElementId = focusedId;
+	}
 	SceneMainMenu.updateFocusElements();
 	
 };
@@ -257,21 +277,19 @@ SceneMainMenu.prototype.keyDownPress = function() {
 		return;
 	}
 	
-	var focusedId = SceneMainMenu.currentFocusElementId;
-	if (focusedId <= 2)
+	if (SceneMainMenu.currentFocusElementId <= 2)
 	{
 		//MiddleMenu
-		focusedId = 3;
-	} else if (focusedId <= 6) {
+		SceneMainMenu.currentFocusElementId = 3;
+	} else if (SceneMainMenu.currentFocusElementId <= 6) {
 		//Carousel
-		focusedId = 7;
+		SceneMainMenu.currentFocusElementId = 7;
 		SceneMainMenu.stopRotatingCarousel();
 	} else {
 		//Top menu
-		focusedId = 0;
+		SceneMainMenu.currentFocusElementId = 0;
 		SceneMainMenu.startRotatingCarousel();
-	}	
-	SceneMainMenu.currentFocusElementId = focusedId;
+	}
 	SceneMainMenu.updateFocusElements();		
 };
 SceneMainMenu.prototype.keyEnterPress = function() {
@@ -320,21 +338,27 @@ SceneMainMenu.prototype.handleKeyDown = function (keyCode) {
     alert("SceneMainMenu.handleKeyDown(" + keyCode + ")");
     switch (keyCode) {
         case sf.key.LEFT:
+        	SceneMainMenu.setActivityControl();
         	this.keyLeftPress();
             break;
         case sf.key.RIGHT:
+        	SceneMainMenu.setActivityControl();
         	this.keyRightPress();
             break;
         case sf.key.UP:
+        	SceneMainMenu.setActivityControl();
         	this.keyUpPress();
             break;
         case sf.key.DOWN:
+        	SceneMainMenu.setActivityControl();
         	this.keyDownPress();
             break;
         case sf.key.ENTER:
+        	SceneMainMenu.setActivityControl();
         	this.keyEnterPress();
             break;
         case sf.key.BACK:
+        	SceneMainMenu.setActivityControl();
         	this.keyBackPress();
         	break;
     }
@@ -346,10 +370,15 @@ SceneMainMenu.prototype.handleShow = function (data) {
 
 SceneMainMenu.prototype.handleHide = function () {
     alert("SceneServices.handleHide()");
+    SceneMainMenu.activityHandler = null;
 };
 
 SceneMainMenu.prototype.handleFocus = function () {
     alert("SceneServices.handleFocus()");
+    SceneMainMenu.setActivityControl();
+    
+    if (SceneMainMenu.carousel)
+    	$(".loaderImg").hide();    
 };
 
 SceneMainMenu.prototype.handleBlur = function () {

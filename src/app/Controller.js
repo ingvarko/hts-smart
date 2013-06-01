@@ -26,5 +26,5 @@ Controller.changeScene = function(newScene) {
 	sf.scene.show(newScene);
 	sf.scene.focus(newScene);
 	this.currentScene = newScene;
-	$(".loaderImg").hide();
+	//$(".loaderImg").hide();
 };

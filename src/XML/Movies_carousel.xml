@@ -1,37 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <carousel>
 	<images categoryId="action">
-		<image src="images/movies/ironman3.jpg" id="ironman3"/>
-		<image src="images/movies/hitman.jpg" id="hitman"/>
-		<image src="images/movies/jumper.jpg" id="jumper"/>
-		<image src="images/movies/spiderman2.jpg" id="spiderman2"/>
-		<image src="images/movies/tor.jpg" id="tor"/>
+		<image src="images/movies/ironman3.jpg" id="ironman3" type="local" url="videos/video2.mov" />
+		<image src="images/movies/hitman.jpg" id="hitman" type="url" url="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4" />
+		<image src="images/movies/jumper.jpg" id="jumper"  type="local" url="videos/video2.mov"/>
+		<image src="images/movies/spiderman2.jpg" id="spiderman2"  type="local" url="videos/video2.mov"/>
+		<image src="images/movies/tor.jpg" id="tor"  type="local" url="videos/video2.mov"/>
 	</images>
 	<images categoryId="cartoons">
-		<image src="images/movies/donaldduck.jpg" id="donaldduck"/>
-		<image src="images/movies/rio.jpg" id="rio"/>
-		<image src="images/movies/snowwhite.jpg" id="snowwhite"/>
-		<image src="images/movies/tomandjerry.jpg" id="tomandjerry"/>
+		<image src="images/movies/donaldduck.jpg" id="donaldduck"  type="local" url="videos/video2.mov"/>
+		<image src="images/movies/rio.jpg" id="rio"  type="local" url="videos/video2.mov"/>
+		<image src="images/movies/snowwhite.jpg" id="snowwhite"  type="local" url="videos/video2.mov"/>
+		<image src="images/movies/tomandjerry.jpg" id="tomandjerry"  type="local" url="videos/video2.mov"/>
 	</images>
 	<images categoryId="comedy">
-		<image src="images/movies/ironman3.jpg" id="ironman3"/>
-		<image src="images/movies/hitman.jpg" id="hitman"/>
-		<image src="images/movies/jumper.jpg" id="jumper"/>
-		<image src="images/movies/spiderman2.jpg" id="spiderman2"/>
+		<image src="images/movies/ironman3.jpg" id="ironman3"  type="local" url="videos/video2.mov"/>
+		<image src="images/movies/hitman.jpg" id="hitman"  type="local" url="videos/video2.mov"/>
+		<image src="images/movies/jumper.jpg" id="jumper"  type="local" url="videos/video2.mov"/>
+		<image src="images/movies/spiderman2.jpg" id="spiderman2"  type="local" url="videos/video2.mov"/>
 		<image src="images/movies/tor.jpg" id="tor"/>
 	</images>
 	<images categoryId="comics">
-		<image src="images/movies/ironman3.jpg" id="ironman3"/>
-		<image src="images/movies/hitman.jpg" id="hitman"/>
-		<image src="images/movies/jumper.jpg" id="jumper"/>
-		<image src="images/movies/spiderman2.jpg" id="spiderman2"/>
-		<image src="images/movies/tor.jpg" id="tor"/>
+		<image src="images/movies/ironman3.jpg" id="ironman3"  type="local" url="videos/video2.mov"/>
+		<image src="images/movies/hitman.jpg" id="hitman" type="local" url="videos/video2.mov"/>
+		<image src="images/movies/jumper.jpg" id="jumper" type="local" url="videos/video2.mov"/>
+		<image src="images/movies/spiderman2.jpg" id="spiderman2" type="local" url="videos/video2.mov"/>
+		<image src="images/movies/tor.jpg" id="tor" type="local" url="videos/video2.mov"/>
 	</images>
 	<images categoryId="fantasy">
-		<image src="images/movies/ironman3.jpg" id="ironman3" description=""/>
-		<image src="images/movies/hitman.jpg" id="hitman" description=""/>
-		<image src="images/movies/jumper.jpg" id="jumper" description=""/>
-		<image src="images/movies/spiderman2.jpg" id="spiderman2" description=""/>
-		<image src="images/movies/tor.jpg" id="tor" description=""/>
+		<image src="images/movies/ironman3.jpg" id="ironman3" type="local" url="videos/video2.mov"/>
+		<image src="images/movies/hitman.jpg" id="hitman" type="local" url="videos/video2.mov"/>
+		<image src="images/movies/jumper.jpg" id="jumper" type="local" url="videos/video2.mov"/>
+		<image src="images/movies/spiderman2.jpg" id="spiderman2" type="local" url="videos/video2.mov"/>
+		<image src="images/movies/tor.jpg" id="tor" type="local" url="videos/video2.mov"/>
 	</images>
 </carousel>

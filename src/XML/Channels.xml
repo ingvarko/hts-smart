@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tv_channels>
-	<tv_channel id="ch_news" catId="tv_sport" imgSrc="images/channels/sport_news.png"/>
-	<tv_channel id="ch_europsport" catId="tv_sport" imgSrc="images/channels/sport_eurosport.png"/>
-	<tv_channel id="ch_europsport_2" catId="tv_sport" imgSrc="images/channels/sport_eurosport2.png"/>
-	<tv_channel id="ch_motors" catId="tv_sport" imgSrc="images/channels/sport_motors.png"/>
-	<tv_channel id="ch_american_football" catId="tv_sport" imgSrc="images/channels/american_football.jpg"/>
-	<tv_channel id="ch_chelsea_tv" catId="tv_sport" imgSrc="images/channels/chelsea_tv.png"/>
-	<tv_channel id="ch_football" catId="tv_sport" imgSrc="images/channels/football.jpg"/>
-	<tv_channel id="ch_hockey" catId="tv_sport" imgSrc="images/channels/hockey.jpg"/>
-	<tv_channel id="ch_news2" catId="tv_sport" imgSrc="images/channels/news2.jpg"/>
-	<tv_channel id="ch_two_touch_pass" catId="tv_sport" imgSrc="images/channels/two_touch_pass.jpg"/>
+	<tv_channel id="ch_news" catId="tv_sport" imgSrc="images/channels/sport_news.png" type="local" url="videos/video2.mov"/>
+	<tv_channel id="ch_europsport" catId="tv_sport" imgSrc="images/channels/sport_eurosport.png" type="local" url="videos/video2.mov"/>
+	<tv_channel id="ch_europsport_2" catId="tv_sport" imgSrc="images/channels/sport_eurosport2.png" type="local" url="videos/video2.mov"/>
+	<tv_channel id="ch_motors" catId="tv_sport" imgSrc="images/channels/sport_motors.png" type="local" url="videos/video2.mov"/>
+	<tv_channel id="ch_american_football" catId="tv_sport" imgSrc="images/channels/american_football.jpg" type="local" url="videos/video2.mov"/>
+	<tv_channel id="ch_chelsea_tv" catId="tv_sport" imgSrc="images/channels/chelsea_tv.png" type="local" url="videos/video2.mov"/>
+	<tv_channel id="ch_football" catId="tv_sport" imgSrc="images/channels/football.jpg" type="local" url="videos/video2.mov"/>
+	<tv_channel id="ch_hockey" catId="tv_sport" imgSrc="images/channels/hockey.jpg" type="local" url="videos/video2.mov"/>
+	<tv_channel id="ch_news2" catId="tv_sport" imgSrc="images/channels/news2.jpg" type="local" url="videos/video2.mov"/>
+	<tv_channel id="ch_two_touch_pass" catId="tv_sport" imgSrc="images/channels/two_touch_pass.jpg" type="local" url="videos/video2.mov"/>
 	
-	<tv_channel id="ch_two_touch_pass" catId="tv_movies" imgSrc="images/channels/two_touch_pass.jpg"/>
-	<tv_channel id="ch_chelsea_tv" catId="tv_movies" imgSrc="images/channels/chelsea_tv.png"/>
-	<tv_channel id="ch_football" catId="tv_movies" imgSrc="images/channels/football.jpg"/>
-	<tv_channel id="ch_hockey" catId="tv_movies" imgSrc="images/channels/hockey.jpg"/>
-	<tv_channel id="ch_news2" catId="tv_movies" imgSrc="images/channels/news2.jpg"/>
-	<tv_channel id="ch_two_touch_pass" catId="tv_movies" imgSrc="images/channels/two_touch_pass.jpg"/>
+	<tv_channel id="ch_two_touch_pass" catId="tv_movies" imgSrc="images/channels/two_touch_pass.jpg" type="local" url="videos/video2.mov"/>
+	<tv_channel id="ch_chelsea_tv" catId="tv_movies" imgSrc="images/channels/chelsea_tv.png" type="local" url="videos/video2.mov"/>
+	<tv_channel id="ch_football" catId="tv_movies" imgSrc="images/channels/football.jpg" type="local" url="videos/video2.mov"/>
+	<tv_channel id="ch_hockey" catId="tv_movies" imgSrc="images/channels/hockey.jpg" type="local" url="videos/video2.mov"/>
+	<tv_channel id="ch_news2" catId="tv_movies" imgSrc="images/channels/news2.jpg" type="local" url="videos/video2.mov"/>
+	<tv_channel id="ch_two_touch_pass" catId="tv_movies" imgSrc="images/channels/two_touch_pass.jpg" type="local" url="videos/video2.mov"/>
 </tv_channels>

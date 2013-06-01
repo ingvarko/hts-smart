@@ -14,11 +14,18 @@ body
 	background-image: url("../../images/background.png");
 }
 
+#flvplayer{
+	position: absolute;
+	top: 1px;
+	left: 1px;
+}
+
 .loaderImg
 {
 	position: absolute;
-	top: 390px;
-	left: 760px;
+	top: 500px;
+	left: 930px;
+	z-index: 1000001;
 }
 .header
 {
