@@ -1,5 +1,5 @@
 function onStart() {
-
+	
 	alert("Setting WatchDog On...");
 	var pluginAPI = new Common.API.Plugin();
     pluginAPI.setOnWatchDog();

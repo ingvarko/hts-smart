@@ -46,7 +46,7 @@ SceneTVchannels.focusElements = [["back", "tv_focusElement_1"],
                              ["categories", "tv_focusElement_4"],
                              ["carousel", "tv_focusElement_5", "tv_focusElement_6"]
                              ];
-SceneTVchannels.currentFocusElementId = 4;
+SceneTVchannels.currentFocusElementId = 0;
 
 
 SceneTVchannels.prototype.initialize = function () {
@@ -57,6 +57,10 @@ SceneTVchannels.prototype.initialize = function () {
     SceneTVchannels.updateFocusElements();
     
     SceneTVchannels.updateTextFields();
+    
+	/*sf.key.registerKey(sf.key.VOL_UP);
+	sf.key.registerKey(sf.key.VOL_DOWN);
+	sf.key.registerKey(sf.key.MUTE);*/
 };
 
 //We init channels' categories list after it's loaded from xml, show/hide needed elements
@@ -218,8 +222,7 @@ SceneTVchannels.doChannelsInit = function() {
    		}
    	}
    	
-   	var activeElementIndex = SceneTVchannels.elementsPositionChn[SceneTVchannels.currentActiveChannelIndex];
-   	SceneTVchannels.listElementsChn[activeElementIndex].find(".channel_img_bg").attr("src", SceneTVchannels.channelsBgImSrc[1]);
+   	SceneTVchannels.updateActiveChannelMark();
 
 };
 
@@ -310,6 +313,21 @@ SceneTVchannels.playVideo = function() {
 	}
 };
 
+SceneTVchannels.exitCategories = function() {
+	SceneTVchannels.currentFocusElementId = 0;
+	
+	SceneTVchannels.updateFocusElements();
+	
+	//hide bottom text
+};
+
+SceneTVchannels.exitChannels = function() {
+	SceneTVchannels.currentFocusElementId = 3;
+	
+	SceneTVchannels.updateFocusElements();
+	
+	//change bottom text
+};
 
 SceneTVchannels.updateTextFields = function() {
 	var d = new Date();
@@ -317,8 +335,7 @@ SceneTVchannels.updateTextFields = function() {
 	
 	$("#month_name_tv").text(Languages["month"][n-1][AppData.language]);
 	
-	$("#back_to_prev_menu_tv").text(Languages["back_to_prev_menu_movietypes"][AppData.language]);
-	$("#home_to_main_menu_tv").text(Languages["home_to_main_menu_movietypes"][AppData.language]);
+	$("#return_to_go_back").text(Languages["return_to_go_back"][AppData.language]);
 };
 
 //This method hide all unfocused elements and shows the focused one
@@ -341,15 +358,22 @@ SceneTVchannels.updateFocusElements = function() {
     		}
     	}  	
     }
+    SceneTVchannels.updateActiveChannelMark();
+    
+    if (SceneTVchannels.currentFocusElementId <= 2)
+    {
+    	$("#return_to_go_back").hide();
+    } else if (SceneTVchannels.currentFocusElementId <= 4) {
+    	$("#return_to_go_back").show();
+    }
 };
 
 SceneTVchannels.moveChannelsLeft = function() {
 	
-	if (SceneTVchannels.currentActiveChannelIndex != 2)
+	if (SceneTVchannels.currentActiveChannelIndex != 2 && SceneTVchannels.currentActiveChannelIndex != 3)
 	{
-		SceneTVchannels.currentActiveChannelIndex--;
+		SceneTVchannels.currentActiveChannelIndex -= 2;
 	} else {
-		SceneTVchannels.currentActiveChannelIndex++;
 		SceneTVchannels.moveChannels(-1);
 	}
 	
@@ -358,16 +382,35 @@ SceneTVchannels.moveChannelsLeft = function() {
 
 SceneTVchannels.moveChannelsRight = function() {
 	
-	if (SceneTVchannels.currentActiveChannelIndex != 5)
+	if (SceneTVchannels.currentActiveChannelIndex != 4 && SceneTVchannels.currentActiveChannelIndex != 5)
 	{
-		SceneTVchannels.currentActiveChannelIndex++;
+		SceneTVchannels.currentActiveChannelIndex += 2;
 	} else {
-		SceneTVchannels.currentActiveChannelIndex--;
 		SceneTVchannels.moveChannels(1);
 	}
 	
 	SceneTVchannels.updateActiveChannelMark();
 	
+};
+
+SceneTVchannels.moveChannelsUp = function() {
+	
+	if (SceneTVchannels.currentActiveChannelIndex % 2 == 1)
+	{
+		SceneTVchannels.currentActiveChannelIndex--;
+		
+		SceneTVchannels.updateActiveChannelMark();
+	}
+};
+
+SceneTVchannels.moveChannelsDown = function() {
+	
+	if (SceneTVchannels.currentActiveChannelIndex % 2 != 1)
+	{
+		SceneTVchannels.currentActiveChannelIndex++;
+		
+		SceneTVchannels.updateActiveChannelMark();
+	}
 };
 
 SceneTVchannels.moveChannels = function(val) {
@@ -424,8 +467,11 @@ SceneTVchannels.updateActiveChannelMark = function() {
 		SceneTVchannels.listElementsChn[i].find(".channel_img_bg").attr("src", SceneTVchannels.channelsBgImSrc[0]);
 	}
 	
-	var activeElementIndex = SceneTVchannels.elementsPositionChn[SceneTVchannels.currentActiveChannelIndex];
-   	SceneTVchannels.listElementsChn[activeElementIndex].find(".channel_img_bg").attr("src", SceneTVchannels.channelsBgImSrc[1]);
+	if (SceneTVchannels.currentFocusElementId == 4)
+	{
+		var activeElementIndex = SceneTVchannels.elementsPositionChn[SceneTVchannels.currentActiveChannelIndex];
+		SceneTVchannels.listElementsChn[activeElementIndex].find(".channel_img_bg").attr("src", SceneTVchannels.channelsBgImSrc[1]);
+	}
 };
 
 SceneTVchannels.moveListUp = function() {
@@ -489,59 +535,59 @@ SceneTVchannels.prototype.keyLeftPress = function() {
 	if (focusedId <= 2)
 	{
 		focusedId = focusedId == 0 ? 2 : focusedId - 1;
-	} else if (focusedId <= 3) {
-		SceneTVchannels.moveListDown();
 		
-		SceneTVchannels.loadChannels();
+		SceneTVchannels.currentFocusElementId = focusedId;
+		SceneTVchannels.updateFocusElements();	
+
+	} else if (focusedId <= 3) {
+		//goto channels carousel
+		SceneTVchannels.currentFocusElementId = 4;
+		SceneTVchannels.updateFocusElements();		
 	} else {
 		//move carousel left
 		SceneTVchannels.moveChannelsLeft();
 	}
-	SceneTVchannels.currentFocusElementId = focusedId;
-	SceneTVchannels.updateFocusElements();	
 };
 SceneTVchannels.prototype.keyRightPress = function() {
 	var focusedId = SceneTVchannels.currentFocusElementId;
 	if (focusedId <= 2)
 	{
 		focusedId = focusedId == 2 ? 0 : focusedId + 1;
-	} else if (focusedId <= 3) {
-		SceneTVchannels.moveListUp();
 		
-		SceneTVchannels.loadChannels();
+		SceneTVchannels.currentFocusElementId = focusedId;
+		SceneTVchannels.updateFocusElements();
+	} else if (focusedId <= 3) {
+		//goto channels carousel
+		SceneTVchannels.currentFocusElementId = 4;
+		SceneTVchannels.updateFocusElements();		
 	} else {
 		//move carousel right
 		SceneTVchannels.moveChannelsRight();
 	}
-	SceneTVchannels.currentFocusElementId = focusedId;
-	SceneTVchannels.updateFocusElements();
 };
 SceneTVchannels.prototype.keyUpPress = function() {
-	var focusedId = SceneTVchannels.currentFocusElementId;
-	if (focusedId <= 2)
+	if (SceneTVchannels.currentFocusElementId <= 2)
 	{
-		focusedId = 4;
-	} else if (focusedId <= 3) {
-		focusedId = 0;
+		SceneTVchannels.currentFocusElementId = 3;
+		SceneTVchannels.updateFocusElements();
+	} else if (SceneTVchannels.currentFocusElementId == 3) {
+		SceneTVchannels.moveListUp();
+		SceneTVchannels.loadChannels();
 	} else {
-		focusedId = 3;
+		SceneTVchannels.moveChannelsUp();
 	}
-	SceneTVchannels.currentFocusElementId = focusedId;
-	SceneTVchannels.updateFocusElements();	
-
 };
 SceneTVchannels.prototype.keyDownPress = function() {
-	var focusedId = SceneTVchannels.currentFocusElementId;
-	if (focusedId <= 2)
+	if (SceneTVchannels.currentFocusElementId <= 2)
 	{
-		focusedId = 3;
-	} else if (focusedId <= 3) {
-		focusedId = 4;
+		SceneTVchannels.currentFocusElementId = 3;
+		SceneTVchannels.updateFocusElements();
+	} else if (SceneTVchannels.currentFocusElementId == 3) {
+		SceneTVchannels.moveListDown();
+		SceneTVchannels.loadChannels();
 	} else {
-		focusedId = 0;
+		SceneTVchannels.moveChannelsDown();
 	}
-	SceneTVchannels.currentFocusElementId = focusedId;
-	SceneTVchannels.updateFocusElements();
 };
 SceneTVchannels.prototype.keyEnterPress = function() {
 	if (SceneTVchannels.isVideoPlaying)
@@ -565,6 +611,11 @@ SceneTVchannels.prototype.keyEnterPress = function() {
 		case 2:
 			//goto Musik screen
 			break;
+		case 3:
+			//goto channels carousel
+			SceneTVchannels.currentFocusElementId = 4;
+			SceneTVchannels.updateFocusElements();
+			break;
 		case 4:
 			//Carousel - select video to play
 			SceneTVchannels.playVideo();
@@ -572,6 +623,30 @@ SceneTVchannels.prototype.keyEnterPress = function() {
 			break;
 	}
 };
+
+SceneTVchannels.prototype.keyReturnPress = function() {
+	if (SceneTVchannels.isVideoPlaying)
+	{
+		SceneTVchannels.stopVideo();
+		return;
+	}
+
+	switch (SceneTVchannels.currentFocusElementId)
+	{
+		case 3:
+			//exit categories carousel
+			SceneTVchannels.exitCategories();
+			break;
+		case 4:
+			//exit channels carousel
+			SceneTVchannels.exitChannels();
+			//play video
+			break;
+	}
+
+	
+};
+
 SceneTVchannels.prototype.keyHomePress = function() {
 	Controller.changeScene('MainMenu');
 };
@@ -590,6 +665,32 @@ SceneTVchannels.prototype.keyPausePress = function() {
 		return;
 	}
 
+};
+
+SceneTVchannels.prototype.keyVolumeUpPress = function() {
+	alert("Volume up pressed!");
+	
+};
+
+SceneTVchannels.prototype.keyVolumeDownPress = function() {
+	alert("Volume down pressed!");
+};
+
+SceneTVchannels.prototype.keyMutePress = function() {
+	alert("Mute pressed!");
+	/*
+	if (userMute == 1) {
+        Main.pluginAudio.SetUserMute(false);
+    } else {
+        Main.pluginAudio.SetUserMute(true);
+    }*/
+	
+	//SceneHomePage.pluginAudio.SetUserMute(true);
+
+    //var userMute = SceneHomePage.pluginAudio.GetUserMute();
+    
+    //SceneHomePage.player.audioMute(userMute);
+	
 };
 
 
@@ -617,9 +718,21 @@ SceneTVchannels.prototype.handleKeyDown = function (keyCode) {
 	    case sf.key.HOME:
 	    	this.keyHomePress();
 	    	break;
+	    case sf.key.RETURN:
+	    	this.keyReturnPress();
+	    	break;
 	    case sf.key.PAUSE:
 	    	this.keyPausePress();
 	    	break;
+        case sf.key.VOL_UP:
+        	this.keyVolumeUpPress();
+			break;
+        case sf.key.VOL_DOWN:
+        	this.keyVolumeDownPress();
+			break;
+        case sf.key.MUTE:
+        	this.keyMutePress();
+			break;
     }
 };
 

@@ -30,7 +30,9 @@ Languages = {
 	"movies_title_text" : ["Movies", "Фільми", "Movies"],
 	"back_to_prev_menu_movietypes" : ["Press BACK to previous menu", "Натисніть BACK для попереднього меню", "Press BACK to previous menu"],
 	"home_to_main_menu_movietypes" : ["Press HOME to main menu", "Натисніть HOME для головного меню", "Press HOME to main menu"],
-		
+
+	"return_to_go_back" : ["Press RETURN to go back", "Нажми RETURN щоб повернутись", "Нажми RETURN щоб повернутись"],
+	
 	"action" : ["Action", "Екшин", "Екшин"],
 	"cartoons" : ["Cartoons", "Мультфільми", "Мультфильми"],
 	"comedy" : ["Comedies", "Комедії", "Комедии"],

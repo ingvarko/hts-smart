@@ -14,15 +14,26 @@
 		<script type="text/javascript" src="app/Plugins/carousel/javascript/modernizr-2.0.6.min.js"></script>
 		<script type="text/javascript" src="app/Plugins/carousel/javascript/jquery.rondell.js"></script>
 
+		<!-- Loading image rotator -->
+		<script type="text/javascript" src="app/Plugins/rotate/jQueryRotate.js"></script>
+
 		<!-- Style sheets custom files -->
 		<link rel="stylesheet" href="app/stylesheets/Main.css" type="text/css">
 		
 		<script type='text/javascript' language='javascript' src='$MANAGER_WIDGET/Common/Define.js'></script>
 		
+		
 	</head>
 
 	<body>
-          
-		<img src="images/loader.gif" class="loaderImg" width="64" height="64"/>
+		<img src="images/loader.png" class="loaderImg"/>
+		
+		<script type='text/javascript' language='javascript'>
+			var angle = 0;
+			setInterval(function(){
+	      	angle+=10;
+	     		$(".loaderImg").rotate(angle);
+			},50);
+		</script>
 	</body>
 </html>

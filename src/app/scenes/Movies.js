@@ -220,54 +220,30 @@ SceneMovies.ParseXML = function(xmlURL) {
 	$("#carouselM").text("");
 	SceneMovies.moviesInfo = [];
 
-	$
-			.ajax({
-				type : "get",
-				dataType : "xml",
-				url : xmlURL,
-				success : function(xml) {
-					$(xml)
-							.find("images")
-							.each(
+	$.ajax({
+		type : "get",
+		dataType : "xml",
+		url : xmlURL,
+		success : function(xml) {
+			$(xml)
+				.find("images")
+				.each(
+					function() { // loop
+						if ($(this).attr("categoryId") == AppData.selectedItem) {
+							if ($(this).find("image").length > 0) {
+								$(this).find("image").each(
 									function() { // loop
-										if ($(this).attr("categoryId") == AppData.selectedItem) {
-											if ($(this).find("image").length > 0) {
+										var src = $(this).attr("src");
 
-												$(this)
-														.find("image")
-														.each(
-																function() { // loop
-																	var src = $(
-																			this)
-																			.attr(
-																					"src");
-
-																	$(
-																			"#carouselM")
-																			.append(
-																					'<a rel="rondell_1" href="#"><img src="'
-																							+ src
-																							+ '" width="914" height="514" class="carouselImage"/></a>');
-
-																	SceneMovies.moviesInfo
-																			.push([
-																					$(
-																							this)
-																							.attr(
-																									"id"),
-																					$(
-																							this)
-																							.attr(
-																									"type"),
-																					$(
-																							this)
-																							.attr(
-																									"url") ]);
-																});
-											}
-										}
+										$("#carouselM").append('<a rel="rondell_1" href="#"><img src="'
+											+ src + '" width="914" height="514" class="carouselImage"/></a>');
+										SceneMovies.moviesInfo.push([$(this).attr("id"),
+																	$(this).attr("type"),
+																	$(this).attr("url") ]);
 									});
-
+							}
+						}
+					});
 					SceneMovies.launchCarousel();
 				},
 				error : function() {

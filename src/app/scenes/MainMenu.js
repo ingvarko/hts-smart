@@ -1,6 +1,10 @@
 function SceneMainMenu() {
 };
 
+SceneMainMenu.isVideoPlaying = false;
+SceneMainMenu.isVideoOnPause = false;
+
+
 //This variable will control no activity and redirecting to main menu
 SceneMainMenu.activityHandler = null;
 SceneMainMenu.isLangMenuShown = false;
@@ -27,6 +31,81 @@ SceneMainMenu.prototype.initialize = function () {
     
     SceneMainMenu.updateTextFields();
 };
+
+//Play/Pause video
+SceneMainMenu.playPauseVideo = function() {
+	if (SceneMainMenu.isVideoPlaying) {
+		if (SceneMainMenu.isVideoOnPause) {
+			sf.service.VideoPlayer.resume();
+			SceneMainMenu.isVideoOnPause = false;
+		} else {
+			sf.service.VideoPlayer.pause();
+			SceneMainMenu.isVideoOnPause = true;
+		}
+	}
+};
+
+// Stop playing video (custom stop or the video ended).
+SceneMainMenu.stopVideo = function() {
+	if (SceneMainMenu.isVideoPlaying) {
+		SceneMainMenu.isVideoPlaying = false;
+
+		sf.service.VideoPlayer.stop();
+
+		sf.service.VideoPlayer.hide();
+	}
+
+	// video is over, we can continue playing bg music
+	var player = document.getElementById("flvplayer");
+	if (player)
+		$(player).show();
+};
+
+// User clicked Enter on the movie - no way out, let's play it :)
+SceneMainMenu.playVideo = function() {
+
+	// first we have to stop playing bg music
+	var player = document.getElementById("flvplayer");
+	if (player)
+		$(player).hide();
+
+	SceneMainMenu.isVideoPlaying = true;
+
+	sf.service.VideoPlayer.setZIndex(100005);
+
+	sf.service.VideoPlayer.init({
+		onend : function() {
+			alert('Video ended.');
+			SceneMainMenu.stopVideo();
+		},
+		onerror : function(error) {
+			alert('Error : ' + error);
+			SceneMainMenu.stopVideo();
+		}
+	});
+
+	sf.service.VideoPlayer.setPosition({
+		left : 0,
+		top : 0,
+		width : 1920,
+		height : 1080
+	});
+
+	// TODO:Sets Player as fullscreen mode - do that when testing on real device
+	// sf.service.VideoPlayer.setFullScreen(true);
+
+	var url = "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4";
+	// SceneMainMenu.moviesInfo[]
+
+	if (url) {
+		// starts playback
+		sf.service.VideoPlayer.play({
+			url : url,
+			fullScreen : false
+		});
+	}
+};
+
 
 SceneMainMenu.setActivityControl = function() {
 	clearTimeout(SceneMainMenu.activityHandler);
@@ -301,6 +380,7 @@ SceneMainMenu.prototype.keyEnterPress = function() {
 			break;
 		case 1:
 			//Play demo video
+			SceneMainMenu.playVideo();
 			break;
 		case 2:
 			//Show language menu
