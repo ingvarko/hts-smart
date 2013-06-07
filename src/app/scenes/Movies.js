@@ -4,6 +4,7 @@ function SceneMovies() {
 SceneMovies.isVideoPlaying = false;
 SceneMovies.isVideoOnPause = false;
 SceneMovies.carousel = null;
+SceneMovies.carouselHandler = null;
 SceneMovies.isRotatingCarousel = false;
 SceneMovies.focusElements = [ [ "back", "movies_focusElement_1" ],
 		[ "tv", "movies_focusElement_2" ],
@@ -43,7 +44,7 @@ SceneMovies.rotateCarousel = function() {
 	if (SceneMovies.isRotatingCarousel) {
 		SceneMovies.carousel.shiftRight();
 
-		setTimeout(function() {
+		SceneMovies.carouselHandler = setTimeout(function() {
 			SceneMovies.rotateCarousel();
 		}, Constants.carouselInterval);
 
@@ -52,18 +53,17 @@ SceneMovies.rotateCarousel = function() {
 };
 
 SceneMovies.startRotatingCarousel = function() {
-	if (SceneMovies.currentFocusElementId == 3)
-		return;
-
 	SceneMovies.isRotatingCarousel = true;
 
-	setTimeout(function() {
+	SceneMovies.carouselHandler = setTimeout(function() {
 		SceneMovies.rotateCarousel();
 	}, Constants.carouselInterval);
 };
 
 SceneMovies.stopRotatingCarousel = function() {
 	SceneMovies.isRotatingCarousel = false;
+	
+	clearTimeout(SceneMovies.carouselHandler);
 };
 
 // Here we update the title text
@@ -167,7 +167,7 @@ SceneMovies.updateFocusElements = function() {
 			$("#" + SceneMovies.focusElements[i][1]).show();
 			if (SceneMovies.focusElements[i][2]) {
 				$("#" + SceneMovies.focusElements[i][2]).show();
-				SceneMovies.stopRotatingCarousel();
+				//SceneMovies.stopRotatingCarousel();
 			}
 		} else {
 			$("#" + SceneMovies.focusElements[i][1]).hide();
@@ -258,7 +258,9 @@ SceneMovies.prototype.keyLeftPress = function() {
 		focusedId = focusedId == 0 ? 2 : focusedId - 1;
 	} else {
 		// Shift Carousel Left
+		SceneMovies.stopRotatingCarousel();
 		SceneMovies.carousel.shiftLeft();
+		SceneMovies.startRotatingCarousel();
 		SceneMovies.updateText();
 	}
 	SceneMovies.currentFocusElementId = focusedId;
@@ -270,7 +272,9 @@ SceneMovies.prototype.keyRightPress = function() {
 		focusedId = focusedId == 2 ? 0 : focusedId + 1;
 	} else {
 		// Shift Carousel Right
+		SceneMovies.stopRotatingCarousel();
 		SceneMovies.carousel.shiftRight();
+		SceneMovies.startRotatingCarousel();
 		SceneMovies.updateText();
 	}
 	SceneMovies.currentFocusElementId = focusedId;
@@ -280,11 +284,11 @@ SceneMovies.prototype.keyUpPress = function() {
 	if (SceneMovies.currentFocusElementId <= 2) {
 		// Carousel
 		SceneMovies.currentFocusElementId = 3;
-		SceneMovies.stopRotatingCarousel();
+		//SceneMovies.stopRotatingCarousel();
 	} else {
 		// Middle menu
 		SceneMovies.currentFocusElementId = 0;
-		SceneMovies.startRotatingCarousel();
+		//SceneMovies.startRotatingCarousel();
 	}
 	SceneMovies.updateFocusElements();
 
@@ -293,11 +297,11 @@ SceneMovies.prototype.keyDownPress = function() {
 	if (SceneMovies.currentFocusElementId <= 2) {
 		// Carousel
 		SceneMovies.currentFocusElementId = 3;
-		SceneMovies.stopRotatingCarousel();
+		//SceneMovies.stopRotatingCarousel();
 	} else {
 		// Top menu
 		SceneMovies.currentFocusElementId = 0;
-		SceneMovies.startRotatingCarousel();
+		//SceneMovies.startRotatingCarousel();
 	}
 	SceneMovies.updateFocusElements();
 };
@@ -333,10 +337,7 @@ SceneMovies.prototype.keyHomePress = function() {
 	Controller.changeScene('MainMenu');
 };
 SceneMovies.prototype.keyBackPress = function() {
-	SceneMovies.stopVideo();
-	// go back
-	Controller.changeScene(AppData.previousScreen);
-	AppData.previousScreen = 'Movies';
+	this.keyReturnPress();
 };
 SceneMovies.prototype.keyPausePress = function() {
 	// exit playing the video
@@ -347,6 +348,20 @@ SceneMovies.prototype.keyPausePress = function() {
 	}
 
 };
+SceneMovies.prototype.keyReturnPress = function() {
+	if (SceneMovies.isVideoPlaying)
+	{
+		SceneMovies.stopVideo();
+	} else {
+		if (AppData.previousScreen != null && AppData.previousScreen != "")
+		{
+			// go back
+			Controller.changeScene(AppData.previousScreen);
+			AppData.previousScreen = 'Movies';
+		}
+	}
+};
+
 
 SceneMovies.prototype.handleKeyDown = function(keyCode) {
 	alert("SceneMovies.handleKeyDown(" + keyCode + ")");
@@ -375,6 +390,9 @@ SceneMovies.prototype.handleKeyDown = function(keyCode) {
 	case sf.key.PAUSE:
 		this.keyPausePress();
 		break;
+    case sf.key.RETURN:
+    	this.keyReturnPress();
+    	break;		
 	}
 };
 SceneMovies.prototype.handleShow = function(data) {

@@ -10,6 +10,7 @@ SceneMainMenu.activityHandler = null;
 SceneMainMenu.isLangMenuShown = false;
 SceneMainMenu.currentLangSelector = null;
 SceneMainMenu.carousel = null;
+SceneMainMenu.carouselHandler = null;
 SceneMainMenu.isRotatingCarousel = false;
 SceneMainMenu.focusElements = [["info", "mainmenu_focusElement_1"],
                                ["demoVideo", "mainmenu_focusElement_2"],
@@ -131,7 +132,7 @@ SceneMainMenu.rotateCarousel = function() {
 	{
 		SceneMainMenu.carousel.shiftRight();
 		
-		setTimeout(function() {
+		SceneMainMenu.carouselHandler = setTimeout(function() {
 			SceneMainMenu.rotateCarousel();
 		}, Constants.carouselInterval);
 	
@@ -139,18 +140,17 @@ SceneMainMenu.rotateCarousel = function() {
 };
 
 SceneMainMenu.startRotatingCarousel = function() {
-	if (SceneMainMenu.currentFocusElementId == 7)
-		return;
-
 	SceneMainMenu.isRotatingCarousel = true;
 	
-	setTimeout(function() {
+	SceneMainMenu.carouselHandler = setTimeout(function() {
 		SceneMainMenu.rotateCarousel();
 	}, Constants.carouselInterval);
 };
 
 SceneMainMenu.stopRotatingCarousel = function() {
 	SceneMainMenu.isRotatingCarousel = false;
+	
+	clearTimeout(SceneMainMenu.carouselHandler);
 };
 
 //This method hide all unfocused elements and shows the focused one
@@ -163,7 +163,7 @@ SceneMainMenu.updateFocusElements = function() {
     		if (SceneMainMenu.focusElements[i][2])
     		{
     			$("#"+SceneMainMenu.focusElements[i][2]).show();
-    			SceneMainMenu.stopRotatingCarousel();
+    			//SceneMainMenu.stopRotatingCarousel();
     		}
     	} else {
     		$("#"+SceneMainMenu.focusElements[i][1]).hide();
@@ -290,7 +290,9 @@ SceneMainMenu.prototype.keyLeftPress = function() {
 		focusedId = focusedId == 3 ? 6 : focusedId - 1;
 	} else {
 		//Shift Carousel Left
+		SceneMainMenu.stopRotatingCarousel();
 		SceneMainMenu.carousel.shiftLeft();
+		SceneMainMenu.startRotatingCarousel();
 	}
 	SceneMainMenu.currentFocusElementId = focusedId;
 	SceneMainMenu.updateFocusElements();	
@@ -309,7 +311,9 @@ SceneMainMenu.prototype.keyRightPress = function() {
 		focusedId = focusedId == 6 ? 3 : focusedId + 1;
 	} else {
 		//Shift Carousel Right
+		SceneMainMenu.stopRotatingCarousel();
 		SceneMainMenu.carousel.shiftRight();
+		SceneMainMenu.startRotatingCarousel();
 	}	
 	SceneMainMenu.currentFocusElementId = focusedId;
 	SceneMainMenu.updateFocusElements();
@@ -331,14 +335,14 @@ SceneMainMenu.prototype.keyUpPress = function() {
 	{
 		//Carousel
 		SceneMainMenu.currentFocusElementId = 7;
-		SceneMainMenu.stopRotatingCarousel();
+		//SceneMainMenu.stopRotatingCarousel();
 	} else if (SceneMainMenu.currentFocusElementId <= 6) {
 		//Top menu
 		SceneMainMenu.currentFocusElementId = 0;
 	} else {
 		//Middle menu
 		SceneMainMenu.currentFocusElementId = 3;
-		SceneMainMenu.startRotatingCarousel();
+		//SceneMainMenu.startRotatingCarousel();
 	}
 	SceneMainMenu.updateFocusElements();
 	
@@ -363,11 +367,11 @@ SceneMainMenu.prototype.keyDownPress = function() {
 	} else if (SceneMainMenu.currentFocusElementId <= 6) {
 		//Carousel
 		SceneMainMenu.currentFocusElementId = 7;
-		SceneMainMenu.stopRotatingCarousel();
+		//SceneMainMenu.stopRotatingCarousel();
 	} else {
 		//Top menu
 		SceneMainMenu.currentFocusElementId = 0;
-		SceneMainMenu.startRotatingCarousel();
+		//SceneMainMenu.startRotatingCarousel();
 	}
 	SceneMainMenu.updateFocusElements();		
 };
@@ -411,9 +415,21 @@ SceneMainMenu.prototype.keyEnterPress = function() {
 	}
 };
 SceneMainMenu.prototype.keyBackPress = function() {
-	if (SceneMainMenu.isLangMenuShown)
-		SceneMainMenu.hideLanguageMenu();
+	this.keyReturnPress();
 };
+SceneMainMenu.prototype.keyReturnPress = function() {
+	if (SceneMainMenu.isLangMenuShown) {
+		SceneMainMenu.hideLanguageMenu();
+	} else {
+		//go back
+		if (AppData.previousScreen != null && AppData.previousScreen != "")
+		{
+			Controller.changeScene(AppData.previousScreen);
+			AppData.previousScreen = 'MainMenu';
+		}
+	}
+};
+
 SceneMainMenu.prototype.handleKeyDown = function (keyCode) {
     alert("SceneMainMenu.handleKeyDown(" + keyCode + ")");
     switch (keyCode) {
@@ -441,6 +457,10 @@ SceneMainMenu.prototype.handleKeyDown = function (keyCode) {
         	SceneMainMenu.setActivityControl();
         	this.keyBackPress();
         	break;
+	    case sf.key.RETURN:
+	    	SceneMainMenu.setActivityControl();
+	    	this.keyReturnPress();
+	    	break;        	
     }
 };
 

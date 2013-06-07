@@ -642,19 +642,27 @@ SceneTVchannels.prototype.keyReturnPress = function() {
 			SceneTVchannels.exitChannels();
 			//play video
 			break;
+		default:
+			//go back to previous screen
+			this.keyBackPress();
+			break;
 	}
-
-	
 };
 
 SceneTVchannels.prototype.keyHomePress = function() {
 	Controller.changeScene('MainMenu');
 };
 SceneTVchannels.prototype.keyBackPress = function() {
-	SceneTVchannels.stopVideo();
-	//go back
-	Controller.changeScene(AppData.previousScreen);
-	AppData.previousScreen = 'TVchannels';
+	if (SceneMovies.isVideoPlaying) {
+		SceneTVchannels.stopVideo();
+	} else {
+		if (AppData.previousScreen != null && AppData.previousScreen != "")
+		{
+			//go back
+			Controller.changeScene(AppData.previousScreen);
+			AppData.previousScreen = 'TVchannels';
+		}
+	}
 };
 SceneTVchannels.prototype.keyPausePress = function() {
 	//exit playing the video

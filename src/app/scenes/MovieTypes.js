@@ -2,6 +2,7 @@ function SceneMovieTypes() {
 };
 
 SceneMovieTypes.carousel = null;
+SceneMovieTypes.carouselHandler = null;
 SceneMovieTypes.isRotatingCarousel = false;
 SceneMovieTypes.focusElements = [["back", "movietypes_focusElement_1"],
                                ["tv", "movietypes_focusElement_2"],
@@ -40,7 +41,7 @@ SceneMovieTypes.rotateCarousel = function() {
 	{
 		SceneMovieTypes.carousel.shiftRight();
 		
-		setTimeout(function() {
+		SceneMovieTypes.carouselHandler = setTimeout(function() {
 			SceneMovieTypes.rotateCarousel();
 		}, Constants.carouselInterval);
 	
@@ -49,18 +50,17 @@ SceneMovieTypes.rotateCarousel = function() {
 };
 
 SceneMovieTypes.startRotatingCarousel = function() {
-	if (SceneMovieTypes.currentFocusElementId == 3)
-		return;
-	
 	SceneMovieTypes.isRotatingCarousel = true;
 	
-	setTimeout(function() {
+	SceneMovieTypes.carouselHandler = setTimeout(function() {
 		SceneMovieTypes.rotateCarousel();
 	}, Constants.carouselInterval);
 };
 
 SceneMovieTypes.stopRotatingCarousel = function() {
 	SceneMovieTypes.isRotatingCarousel = false;
+	
+	clearTimeout(SceneMovieTypes.carouselHandler);
 };
 
 //Here we update the title text
@@ -81,7 +81,7 @@ SceneMovieTypes.updateFocusElements = function() {
     		if (SceneMovieTypes.focusElements[i][2])
     		{
     			$("#"+SceneMovieTypes.focusElements[i][2]).show();
-    			SceneMovieTypes.stopRotatingCarousel();
+    			//SceneMovieTypes.stopRotatingCarousel();
     		}
     	} else {
     		$("#"+SceneMovieTypes.focusElements[i][1]).hide();
@@ -162,7 +162,9 @@ SceneMovieTypes.prototype.keyLeftPress = function() {
 		focusedId = focusedId == 0 ? 2 : focusedId - 1;
 	} else {
 		//Shift Carousel Left
+		SceneMovieTypes.stopRotatingCarousel();
 		SceneMovieTypes.carousel.shiftLeft();
+		SceneMovieTypes.startRotatingCarousel();
 		SceneMovieTypes.updateText();
 	}
 	SceneMovieTypes.currentFocusElementId = focusedId;
@@ -175,7 +177,9 @@ SceneMovieTypes.prototype.keyRightPress = function() {
 		focusedId = focusedId == 2 ? 0 : focusedId + 1;
 	} else {
 		//Shift Carousel Right
+		SceneMovieTypes.stopRotatingCarousel();
 		SceneMovieTypes.carousel.shiftRight();
+		SceneMovieTypes.startRotatingCarousel();
 		SceneMovieTypes.updateText();
 	}	
 	SceneMovieTypes.currentFocusElementId = focusedId;
@@ -186,11 +190,11 @@ SceneMovieTypes.prototype.keyUpPress = function() {
 	{
 		//Carousel
 		SceneMovieTypes.currentFocusElementId = 3;
-		SceneMovieTypes.stopRotatingCarousel();
+		//SceneMovieTypes.stopRotatingCarousel();
 	} else {
 		//Middle menu
 		SceneMovieTypes.currentFocusElementId = 0;
-		SceneMovieTypes.startRotatingCarousel();
+		//SceneMovieTypes.startRotatingCarousel();
 	}	
 	SceneMovieTypes.updateFocusElements();
 	
@@ -200,11 +204,11 @@ SceneMovieTypes.prototype.keyDownPress = function() {
 	{
 		//Carousel
 		SceneMovieTypes.currentFocusElementId = 3;
-		SceneMovieTypes.stopRotatingCarousel();
+		//SceneMovieTypes.stopRotatingCarousel();
 	} else {
 		//Top menu
 		SceneMovieTypes.currentFocusElementId = 0;
-		SceneMovieTypes.startRotatingCarousel();
+		//SceneMovieTypes.startRotatingCarousel();
 	}	
 	SceneMovieTypes.updateFocusElements();		
 };
@@ -238,9 +242,18 @@ SceneMovieTypes.prototype.keyHomePress = function() {
 	Controller.changeScene('MainMenu');
 };
 SceneMovieTypes.prototype.keyBackPress = function() {
-	//go back
-	Controller.changeScene(AppData.previousScreen);
-	AppData.previousScreen = 'MovieTypes';
+	this.keyReturnPress();
+};
+SceneMovieTypes.prototype.keyReturnPress = function() {
+	if (AppData.previousScreen != null && AppData.previousScreen != "")
+	{
+		if (AppData.previousScreen != null && AppData.previousScreen != "")
+		{
+			//go back
+			Controller.changeScene(AppData.previousScreen);
+			AppData.previousScreen = 'MovieTypes';
+		}
+	}
 };
 
 
@@ -267,6 +280,9 @@ SceneMovieTypes.prototype.handleKeyDown = function (keyCode) {
 	    	break;
 	    case sf.key.HOME:
 	    	this.keyHomePress();
+	    	break;
+	    case sf.key.RETURN:
+	    	this.keyReturnPress();
 	    	break;
     }
 };

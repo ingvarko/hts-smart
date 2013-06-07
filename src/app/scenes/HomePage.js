@@ -12,6 +12,7 @@ SceneHomePage.player = null;
 SceneHomePage.isLangMenuShown = false;
 SceneHomePage.currentLangSelector = null;
 SceneHomePage.carousel = null;
+SceneHomePage.carouselHandler = null;
 SceneHomePage.isRotatingCarousel = false;
 SceneHomePage.focusElements = [["info", "homepage_focusElement_1"],
                                ["demoVideo", "homepage_focusElement_2"],
@@ -127,7 +128,7 @@ SceneHomePage.rotateCarousel = function() {
 	{
 		SceneHomePage.carousel.shiftRight();
 		
-		setTimeout(function() {
+		SceneHomePage.carouselHandler = setTimeout(function() {
 			SceneHomePage.rotateCarousel();
 		}, Constants.carouselInterval);
 	
@@ -135,18 +136,17 @@ SceneHomePage.rotateCarousel = function() {
 };
 
 SceneHomePage.startRotatingCarousel = function() {
-	if (SceneHomePage.currentFocusElementId == 7)
-		return;
-
 	SceneHomePage.isRotatingCarousel = true;
 	
-	setTimeout(function() {
+	SceneHomePage.carouselHandler = setTimeout(function() {
 		SceneHomePage.rotateCarousel();
 	}, Constants.carouselInterval);
 };
 
 SceneHomePage.stopRotatingCarousel = function() {
 	SceneHomePage.isRotatingCarousel = false;
+	
+	clearTimeout(SceneHomePage.carouselHandler);
 };
 
 //This method hide all unfocused elements and shows the focused one
@@ -159,7 +159,7 @@ SceneHomePage.updateFocusElements = function() {
     		if (SceneHomePage.focusElements[i][2])
     		{
     			$("#"+SceneHomePage.focusElements[i][2]).show();
-    			SceneHomePage.stopRotatingCarousel();
+    			//SceneHomePage.stopRotatingCarousel();
     		}
     	} else {
     		$("#"+SceneHomePage.focusElements[i][1]).hide();
@@ -203,6 +203,7 @@ SceneHomePage.launchCarousel = function() {
 		$(".loaderImg").hide();
 	});
 
+	SceneHomePage.startRotatingCarousel();
 };
 
 SceneHomePage.ParseXML = function (xmlURL) {
@@ -295,7 +296,9 @@ SceneHomePage.prototype.keyLeftPress = function() {
 		focusedId = focusedId == 0 ? 2 : focusedId - 1;
 	} else {
 		//Shift Carousel Left
+		SceneHomePage.stopRotatingCarousel();
 		SceneHomePage.carousel.shiftLeft();
+		SceneHomePage.startRotatingCarousel();
 	}
 	SceneHomePage.currentFocusElementId = focusedId;
 	SceneHomePage.updateFocusElements();	
@@ -312,7 +315,9 @@ SceneHomePage.prototype.keyRightPress = function() {
 		focusedId = focusedId == 2 ? 0 : focusedId + 1;
 	} else {
 		//Shift Carousel Right
+		SceneHomePage.stopRotatingCarousel();
 		SceneHomePage.carousel.shiftRight();
+		SceneHomePage.startRotatingCarousel();
 	}	
 	SceneHomePage.currentFocusElementId = focusedId;
 	SceneHomePage.updateFocusElements();
@@ -334,11 +339,11 @@ SceneHomePage.prototype.keyUpPress = function() {
 	{
 		//Carousel
 		SceneHomePage.currentFocusElementId = 3;
-		SceneHomePage.stopRotatingCarousel();
+		//SceneHomePage.stopRotatingCarousel();
 	} else {
 		//Middle menu
 		SceneHomePage.currentFocusElementId = 0;
-		SceneHomePage.startRotatingCarousel();
+		//SceneHomePage.startRotatingCarousel();
 	}
 	SceneHomePage.updateFocusElements();
 	
@@ -360,11 +365,11 @@ SceneHomePage.prototype.keyDownPress = function() {
 	{
 		//Carousel
 		SceneHomePage.currentFocusElementId = 3;
-		SceneHomePage.stopRotatingCarousel();
+		//SceneHomePage.stopRotatingCarousel();
 	} else {
 		//Top menu
 		SceneHomePage.currentFocusElementId = 0;
-		SceneHomePage.startRotatingCarousel();
+		//SceneHomePage.startRotatingCarousel();
 	}
 	SceneHomePage.updateFocusElements();		
 };
@@ -394,7 +399,7 @@ SceneHomePage.prototype.keyEnterPress = function() {
 			break;
 		case 3:
 			//goto TV channels screen
-			AppData.previousScreen = 'HomePage';
+			//AppData.previousScreen = 'HomePage';
 			Controller.changeScene('MainMenu');
 			break;
 	}
